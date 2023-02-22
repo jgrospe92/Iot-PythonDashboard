@@ -8,3 +8,11 @@ based on received data. They also develop access control and occupancy systems a
 data to the cloud or a local server. Finally, they design and develop a web-based IoT dashboard to
 control and monitor the system. 
 
+# Virtual Environment
+- To activate it, run the command `Iot-PythonDashboard\Scripts\activate`
+- Your terminal should change into this (Iot-PythonDashboard)
+- To deactivate it, run the command `deactivate`
+
+# Installing Dependencies
+- Make sure you're in the python environment
+- Then run the command `pip install -r requirements.txt`
