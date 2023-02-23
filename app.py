@@ -13,7 +13,7 @@ import src.Controller.ControllerSystem as cs
 # from time import sleep
 
 def main() -> None:
-    app = Dash(external_stylesheets=[dbc.themes.SLATE])
+    app = Dash(__name__,external_stylesheets=[dbc.themes.SLATE])
     app.title = "IOT DashBoard"
     app.layout = create_layout(app)
 
@@ -44,7 +44,7 @@ def main() -> None:
             raise PreventUpdate
         else:
             # Tenary operator return OFF if condiion is == 0 else ON
-            return "<b>background-color: #000<b>" if cs.isActive == 0 else "background-color: #FFDB12"
+            return "style={background-color: #FFDB12}" if cs.isActive == 0 else "background-color: #FFDB12"
 
     app.run()
 
