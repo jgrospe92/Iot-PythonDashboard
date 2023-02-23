@@ -1,3 +1,4 @@
+# This class handles all functionalities when connecting to the Raspberry
 
 # Import Rpi and sleep libraris
 # Set a global flag

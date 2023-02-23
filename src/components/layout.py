@@ -1,3 +1,6 @@
+# This class is main Layout
+# After creating a component ex. the card class, add here as a new div
+
 from dash import Dash, html
 # this is the layout manager
 # import other components
