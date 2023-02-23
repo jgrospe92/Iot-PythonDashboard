@@ -1,4 +1,5 @@
 from dash import Dash, html, Input, Output
+import time
 # from dash_bootstrap_components.themes import BOOTSTRAP
 import dash_bootstrap_components as dbc
 from dash.exceptions import PreventUpdate
@@ -19,18 +20,31 @@ def main() -> None:
     # NOTE: Uncomment this if you are using your raspberry pi
     #cs.set_up()
 
-    # Button Callbacks
+    # Callbacks for the button switch
     @app.callback(
         Output(component_id='btn-activate', component_property='children'),
-        Input(component_id='btn-activate', component_property='n_clicks')
+        Input(component_id='btn-activate', component_property='n_clicks'),
     )
-    def update_output(n_clicks):
+    def update_button(n_clicks):
         global isActive
         if n_clicks is None:
             raise PreventUpdate
         else:
             # Tenary operator return OFF if condiion is == 0 else ON
             return "OFF" if cs.light_controller() == 0 else "ON"
+
+    # Callback for the lightbulb
+    @app.callback(
+        Output(component_id='lightbulb', component_property="children"),
+        Input(component_id='btn-activate', component_property='n_clicks')
+    )
+    def update_lightbulb(n_clicks):
+        global isActive
+        if n_clicks is None:
+            raise PreventUpdate
+        else:
+            # Tenary operator return OFF if condiion is == 0 else ON
+            return "<b>background-color: #000<b>" if cs.isActive == 0 else "background-color: #FFDB12"
 
     app.run()
 

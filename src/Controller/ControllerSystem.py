@@ -16,12 +16,12 @@ def light_controller()->int:
     if isActive == 1:
         # Turn the light off
         #GPIO.output(LED, 0)
-        print("LIGHT OFF:" + str(isActive))
+        print("LIGHT OFF: " + str(isActive))
         isActive = 0
         return 0
     else:
         # Turn the light on
         isActive = 1
-        print("LIGHT ON" + str(isActive))
+        print("LIGHT ON: " + str(isActive))
         #GPIO.output(LED, 1)
         return 1

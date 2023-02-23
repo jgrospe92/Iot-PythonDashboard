@@ -7,6 +7,11 @@ from dash import html, Dash
 LIGHT_OFF = 'https://cdn-icons-png.flaticon.com/512/3626/3626525.png'
 LIGHT_ON = 'https://cdn-icons-png.flaticon.com/512/3625/3625060.png'
 
+#color
+WHITE = "#FFFFFF"
+BLACK = "#000"
+YELLOW = "#FFDB12"
+
 def render_card(app: Dash) -> html.Div:
     cards = dbc.CardGroup(
         [
@@ -62,13 +67,13 @@ def render_card(app: Dash) -> html.Div:
             dbc.Card(
                 dbc.CardBody(
                     [
-                        html.H5("Status", className="card-title"),
-                        dbc.CardImg(src=LIGHT_OFF,
-                                    top=True,
-                                    style={"width": "10rem",
-                                           "border-radius": "50%",
-                                           "align-self": "center",
-                                           "justify-self": "center"}),
+                        html.H5("Status", className="card-title d-flex"),
+                        html.Div(id="lightbulb" ,style={"height":"100px",
+                                       "width":"100px",
+                                       "background-color":BLACK,
+                                        "border-radius": "50%",
+                                        "text-align": "center",
+                                       }),
                         html.P(
                             "TODO: add image or css styling for the light",
                             className="card-text",

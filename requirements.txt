@@ -1,2 +1,2 @@
 dash
-dash-bootsrap-components
+dash-bootstrap-components
