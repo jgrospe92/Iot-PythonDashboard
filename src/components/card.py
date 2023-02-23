@@ -2,24 +2,54 @@
 
 import dash_bootstrap_components as dbc
 from dash import html, Dash
-
+from dash.dependencies import Input, Output
+import src.Controller.ControllerSystem as cs
+import dash_daq as daq
+from . import Colors
 # Light Bulb Images
 LIGHT_OFF = 'https://cdn-icons-png.flaticon.com/512/3626/3626525.png'
 LIGHT_ON = 'https://cdn-icons-png.flaticon.com/512/3625/3625060.png'
 
 
-
 def render_card(app: Dash) -> html.Div:
+    # Add the callbacks
+    # Callbacks for the button switch
+    @app.callback(
+        # Output(component_id='btn-activate', component_property='children'),
+        # Input(component_id='btn-activate', component_property='n_clicks'),
+        Output('power-button-result-1', 'children'),
+        Input('our-power-button-1', 'on')
+    )
+    def update_button(n_clicks):
+        if n_clicks is None:
+            raise PreventUpdate
+        else:
+            # Tenary operator return OFF if condiion is == 0 else ON
+            cs.light_controller()
+            # return "OFF" if cs.light_controller() == 0 else "ON"
+
+
+    # Callback for the lightbulb
+    @app.callback(
+        Output(component_id='lightbulb', component_property="style"),
+        Input('our-power-button-1', 'on')
+    )
+    def update_lightbulb(n_clicks):
+        if n_clicks is None:
+            raise PreventUpdate
+        else:
+            # Tenary operator return OFF if condiion is == 0 else ON
+            return {'background-color': '#000'} if cs.isActive == 0 else {'background-color': '#FFDB12'}
+
     cards = dbc.CardGroup(
         [
             dbc.Card([
                 dbc.CardImg(src="https://cdn-icons-png.flaticon.com/512/560/560277.png",
                             top=True,
-                            style={"width":"10rem",
+                            style={"width": "10rem",
                                    "border-radius": "50%",
-                                   "align-self":"center",
+                                   "align-self": "center",
                                    "justify-self": "center"}),
-
                 dbc.CardBody(
                     [
                         html.H5("User Profile", className="card-title"),
@@ -55,9 +85,15 @@ def render_card(app: Dash) -> html.Div:
                             "Turn the switch on or off.",
                             className="card-text",
                         ),
-                        dbc.Button(
-                            "ON",id="btn-activate",n_clicks=0, color="success", className="mt-auto"
-                        ),
+                        html.Div([
+                            daq.PowerButton(
+                                id='our-power-button-1',
+                                on=True,
+                                size=100,
+                                color=Colors.GREEN
+                            ),
+                            html.Div(id='power-button-result-1')
+                        ]),
                     ]
                 )
             ),

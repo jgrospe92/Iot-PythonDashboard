@@ -22,7 +22,6 @@ control and monitor the system.
 - Run the command `source Scripts/activate` to activate the virtual environment
 - Your terminal should change into this (Iot-PythonDashboard)
 - To deactivate it, run the command `deactivate`
-- 
 # Important
 - Make sure you name the folder Iot-PythonDashboard
 
