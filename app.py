@@ -35,7 +35,7 @@ def main() -> None:
 
     # Callback for the lightbulb
     @app.callback(
-        Output(component_id='lightbulb', component_property="children"),
+        Output(component_id='lightbulb', component_property="style"),
         Input(component_id='btn-activate', component_property='n_clicks')
     )
     def update_lightbulb(n_clicks):
@@ -44,7 +44,7 @@ def main() -> None:
             raise PreventUpdate
         else:
             # Tenary operator return OFF if condiion is == 0 else ON
-            return "style={background-color: #FFDB12}" if cs.isActive == 0 else "background-color: #FFDB12"
+            return {'background-color': '#000'} if cs.isActive == 0 else {'background-color': '#FFDB12'}
 
     app.run()
 

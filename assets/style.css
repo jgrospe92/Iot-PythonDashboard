@@ -1,6 +1,16 @@
-<!-- Add your custom css here -->
+<!--
+Add your custom css here
 
-.yellow_color{
+-->
+/*Add variables here*/
+:root {
+    --WHITE: "#FFFFFF";
+    --BLACK: "#000";
+    --YELLOW: "#FFDB12";
+}
+
+
+.yellow_color {
     background-color: darkorange;
 }
 
@@ -13,4 +23,20 @@
 .app-header .app-header--title {
     font-size: 22px;
     padding-left: 5px;
+}
+
+.light-off {
+    height: 100px;
+    width: 100px;
+    background-color: var(--BLACK);
+    border-radius: 50%;
+    text-align: center;
+}
+
+light-on {
+   height: 100px;
+    width: 100px;
+    background-color: var(--YELLOW);
+    border-radius: 50%;
+    text-align: center;
 }
