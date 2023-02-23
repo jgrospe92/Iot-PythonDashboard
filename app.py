@@ -4,18 +4,14 @@ import time
 import dash_bootstrap_components as dbc
 from dash.exceptions import PreventUpdate
 from src.components.layout import create_layout
+import src.Controller.ControllerSystem as cs
 
-
-
-# Import RPi and time libraris
-# Temporary disabled these libraries / uncomment it if you are using your Raspberry pi
-# import RPi.GPIO as GPIO
-# from time import sleep
 
 def main() -> None:
     app = Dash(__name__,external_stylesheets=[dbc.themes.SLATE])
     app.title = "IOT DashBoard"
     app.layout = create_layout(app)
+    print("Iniating Dashboard...")
     # NOTE: Uncomment this if you are using your raspberry pi
     #cs.set_up()
 
