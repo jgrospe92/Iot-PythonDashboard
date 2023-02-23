@@ -1,6 +1,9 @@
 import dash_bootstrap_components as dbc
 from dash import html, Dash
 
+# Light Bulb Images
+LIGHT_OFF = 'https://cdn-icons-png.flaticon.com/512/3626/3626525.png'
+LIGHT_ON = 'https://cdn-icons-png.flaticon.com/512/3625/3625060.png'
 
 def render_card(app: Dash) -> html.Div:
     cards = dbc.CardGroup(
@@ -49,7 +52,7 @@ def render_card(app: Dash) -> html.Div:
                             className="card-text",
                         ),
                         dbc.Button(
-                            "ON", color="success", className="mt-auto"
+                            "ON",id="btn-activate",n_clicks=0, color="success", className="mt-auto"
                         ),
                     ]
                 )
@@ -58,6 +61,12 @@ def render_card(app: Dash) -> html.Div:
                 dbc.CardBody(
                     [
                         html.H5("Status", className="card-title"),
+                        dbc.CardImg(src=LIGHT_OFF,
+                                    top=True,
+                                    style={"width": "10rem",
+                                           "border-radius": "50%",
+                                           "align-self": "center",
+                                           "justify-self": "center"}),
                         html.P(
                             "TODO: add image or css styling for the light",
                             className="card-text",
