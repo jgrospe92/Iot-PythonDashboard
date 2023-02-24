@@ -32,3 +32,10 @@ control and monitor the system.
 - You have to install each dependencies manually by running this command
 - `pip install {the name of the dependency}`
 - Check the requirements.txt for the names
+
+# How to run the project
+- Look for the app.py and execute it
+- It should provide you a localhost address
+
+# Plottly Dash Documentation
+- https://dash.plotly.com/
