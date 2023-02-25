@@ -6,10 +6,6 @@ from dash.dependencies import Input, Output
 import src.Controller.ControllerSystem as cs
 import dash_daq as daq
 from . import Colors
-# Light Bulb Images
-LIGHT_OFF = 'https://cdn-icons-png.flaticon.com/512/3626/3626525.png'
-LIGHT_ON = 'https://cdn-icons-png.flaticon.com/512/3625/3625060.png'
-
 
 def render_card(app: Dash) -> html.Div:
     # Add the callbacks
@@ -28,7 +24,6 @@ def render_card(app: Dash) -> html.Div:
             #print(cs.isActive);
             #cs.light_controller()
              return  {'background-color': '#000'} if cs.light_controller() == 0 else {'background-color': '#FFDB12'}
-
 
     cards = dbc.CardGroup(
         [

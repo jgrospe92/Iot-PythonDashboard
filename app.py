@@ -6,27 +6,22 @@ from dash.exceptions import PreventUpdate
 from src.components.layout import create_layout
 import src.Controller.ControllerSystem as cs
 
-# External Javascript
-external_scripts = [
-    {'src': 'href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"',
-     'integrity':"sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4",
-     'crossorigin':"anonymous"}
-]
 
-# External CSS stylesheets
-external_stylesheets = [
-    {'href': ''}
-]
-
+# These are the themes
 # dbc.themes.VAPOR = this is a cyberpunk theme
 # dbc.themes.SLATE = this is a dark faded theme
 
 def main() -> None:
-    app = Dash(__name__,external_stylesheets=[dbc.themes.BOOTSTRAP, dbc.themes.SLATE])
+    app = Dash(__name__,external_stylesheets=[dbc.themes.BOOTSTRAP, dbc.themes.VAPOR])
     app.title = "IOT DashBoard"
     app.layout = create_layout(app)
     print("Iniating Dashboard...")
-    # NOTE: Uncomment this if you are using your raspberry pi
+    '''
+        WHen using Raspberry pi and GPIO
+        NOTE: Uncomment this cs.set_up()
+        NOTE: Also go to the ControllerSystem.py, uncomment the GPIO.output in the light_controller()
+        NOTE: Lastly, uncomment import RPi.GPIO as GPIO and from time import sleep
+    '''
     #cs.set_up()
 
     app.run()
