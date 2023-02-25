@@ -1,5 +1,5 @@
 # This is a sample of a component class
-
+import time
 import dash_bootstrap_components as dbc
 from dash import html, Dash
 from dash.dependencies import Input, Output
@@ -17,29 +17,18 @@ def render_card(app: Dash) -> html.Div:
     @app.callback(
         # Output(component_id='btn-activate', component_property='children'),
         # Input(component_id='btn-activate', component_property='n_clicks'),
-        Output('power-button-result-1', 'children'),
-        Input('our-power-button-1', 'on')
+        Output(component_id='lightbulb', component_property="style"),
+        Input('our-power-button-1', 'on'),
     )
     def update_button(n_clicks):
         if n_clicks is None:
             raise PreventUpdate
         else:
             # Tenary operator return OFF if condiion is == 0 else ON
-            cs.light_controller()
-            # return "OFF" if cs.light_controller() == 0 else "ON"
+            #print(cs.isActive);
+            #cs.light_controller()
+             return  {'background-color': '#000'} if cs.light_controller() == 0 else {'background-color': '#FFDB12'}
 
-
-    # Callback for the lightbulb
-    @app.callback(
-        Output(component_id='lightbulb', component_property="style"),
-        Input('our-power-button-1', 'on')
-    )
-    def update_lightbulb(n_clicks):
-        if n_clicks is None:
-            raise PreventUpdate
-        else:
-            # Tenary operator return OFF if condiion is == 0 else ON
-            return {'background-color': '#000'} if cs.isActive == 0 else {'background-color': '#FFDB12'}
 
     cards = dbc.CardGroup(
         [
@@ -100,8 +89,8 @@ def render_card(app: Dash) -> html.Div:
             dbc.Card(
                 dbc.CardBody(
                     [
-                        html.H5("Status", className="card-title d-flex"),
-                        html.Div(id="lightbulb", className="light-off"),
+                        html.H5("Status", className="card-title"),
+                        html.Div(children=html.Div(id="lightbulb", className="light-off"),className="d-flex  flex-column"),
                         html.P(
                             "TODO: add image or css styling for the light",
                             className="card-text",
@@ -109,9 +98,10 @@ def render_card(app: Dash) -> html.Div:
                         # dbc.Button(
                         #     "Click here", color="danger", className="mt-auto"
                         # ),
-                    ]
+                    ],className=""
                 )
             ),
-        ]
+        ],
+
     )
     return cards
