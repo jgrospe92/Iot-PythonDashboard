@@ -85,11 +85,8 @@ def render_card(app: Dash) -> html.Div:
                 dbc.CardBody(
                     [
                         html.H5("Status", className="card-title"),
-                        html.Div(children=html.Div(id="lightbulb", className="light-off"),className="d-flex  flex-column"),
-                        html.P(
-                            "TODO: add image or css styling for the light",
-                            className="card-text",
-                        ),
+                        html.Div(style={"display":"flex"," align-items": "center", "justify-content":"center",
+                                        },children=html.Div(id="lightbulb", className="light-off")),
                         # dbc.Button(
                         #     "Click here", color="danger", className="mt-auto"
                         # ),
