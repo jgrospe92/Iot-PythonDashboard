@@ -21,8 +21,6 @@ def render_card(app: Dash) -> html.Div:
             raise PreventUpdate
         else:
             # Tenary operator return OFF if condiion is == 0 else ON
-            #print(cs.isActive);
-            #cs.light_controller()
              return  {'background-color': '#000'} if cs.light_controller() == 0 else {'background-color': '#FFDB12'}
 
     cards = dbc.CardGroup(
