@@ -24,6 +24,8 @@ control and monitor the system.
 - To deactivate it, run the command `deactivate`
 # Important
 - Make sure you name the folder Iot-PythonDashboard
+- if you don't have the virtual environment installed, you can't activate the virtual environment
+- run this command to install it `pip install virtualenv`
 
 # Installing Dependencies
 - Make sure you're in the python environment
