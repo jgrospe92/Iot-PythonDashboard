@@ -14,7 +14,7 @@ def render_card(app: Dash) -> html.Div:
     @app.callback(
         # Output(component_id='btn-activate', component_property='children'),
         # Input(component_id='btn-activate', component_property='n_clicks'),
-        Output(component_id='lightbulb', component_property="style"),
+        Output(component_id='lightbulb', component_property="src"),
         Input('our-power-button-1', 'on'),
     )
     def update_button(n_clicks):
@@ -22,7 +22,7 @@ def render_card(app: Dash) -> html.Div:
             raise PreventUpdate
         else:
             # Tenary operator return OFF if condiion is == 0 else ON
-            return {'background-color': '#000'} if cs.light_controller() == 0 else {'background-color': '#FFDB12'}
+            return "https://cdn-icons-png.flaticon.com/512/3626/3626525.png" if cs.light_controller() == 0 else "https://cdn-icons-png.flaticon.com/512/3625/3625060.png"
 
     profile = html.Div(className="container h-100",
                        children=[dbc.Card([dbc.CardHeader("User Profile"),
@@ -72,7 +72,8 @@ def render_card(app: Dash) -> html.Div:
                                 color=Colors.GREEN
                             ),
                             html.Div(id='power-button-result-1'),
-                            html.Div(id="lightbulb", className="light-off"),
+                            #html.Div(id="lightbulb", className="light-off"),
+                            html.Div(html.Img(id="lightbulb",className="light",src="https://cdn-icons-png.flaticon.com/512/3625/3625060.png"),className="light-container")
                         ],className="d-flex flex-row justify-content-evenly"),
                     ],className=""
                 )

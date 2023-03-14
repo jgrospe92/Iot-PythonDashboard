@@ -25,11 +25,16 @@ Add your custom css here
     padding-left: 5px;
 }
 
-.light-off {
+.light-container {
     height: 100px;
     width: 100px;
-    background-color: var(--BLACK);
-    border-radius: 50%;
+    /*background-color: var(--BLACK);*/
+    /*border-radius: 50%;*/
+}
+
+.light{
+    height: 100px;
+    object-fit: fill;
 }
 
 light-on {
