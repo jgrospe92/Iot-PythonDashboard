@@ -9,7 +9,7 @@ from . import Clock
 
 def create_layout(app: Dash) -> html.Div:
     return html.Div(
-        className="container",
+        className="container vh-100",
         children=[
             html.H1(app.title),
             #Clock.render_clock(app),

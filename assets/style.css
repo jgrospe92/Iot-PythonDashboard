@@ -30,13 +30,11 @@ Add your custom css here
     width: 100px;
     background-color: var(--BLACK);
     border-radius: 50%;
-    text-align: center;
 }
 
 light-on {
-   height: 100px;
+    height: 100px;
     width: 100px;
     background-color: var(--YELLOW);
     border-radius: 50%;
-    text-align: center;
 }
