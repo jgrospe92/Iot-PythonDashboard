@@ -16,6 +16,14 @@ control and monitor the system.
 - Your terminal should change into this (Iot-PythonDashboard)
 - To deactivate it, run the command `deactivate`
 
+# IOT dashboard Gadgets
+## LED Controll
+![LED_control](https://user-images.githubusercontent.com/77903214/226199328-e43ea068-e232-4dad-af93-d2dc6bbfe0ae.gif)
+
+## Temperature Controll
+![fan_controll](https://user-images.githubusercontent.com/77903214/226199092-bb10ebb0-7779-44ba-930f-6a6620b5639b.gif)
+
+
 ## Arduino & MAc
 - cd to the to main directory
 - Once inside Iot-PythonDashboard
