@@ -10,8 +10,7 @@
 # import RPi.GPIO as GPIO
 import time
 
-
-class DHT11_controller(object):
+class DHT(object):
     DHTLIB_OK = 0
     DHTLIB_ERROR_CHECKSUM = -1
     DHTLIB_ERROR_TIMEOUT = -2
