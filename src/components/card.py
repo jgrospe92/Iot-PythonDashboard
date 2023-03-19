@@ -6,8 +6,7 @@ from dash.dependencies import Input, Output
 import src.Controller.ControllerSystem as cs
 import dash_daq as daq
 from . import Colors
-
-
+from . import Gauge
 def render_card(app: Dash) -> html.Div:
     # Add the callbacks
     # Callbacks for the button switch
@@ -62,29 +61,30 @@ def render_card(app: Dash) -> html.Div:
                         html.H5("LED CONTROL", className="card-title"),
                         html.P(
                             "Turn the switch on or off.",
-                            className="card-text",
+                            className="card-text text-warning",
                         ),
                         html.Div([
                             daq.PowerButton(
                                 id='our-power-button-1',
                                 on=True,
                                 size=100,
-                                color=Colors.GREEN
+                                color=Colors.GREEN,
                             ),
                             html.Div(id='power-button-result-1'),
                             #html.Div(id="lightbulb", className="light-off"),
                             html.Div(html.Img(id="lightbulb",className="light",src="https://cdn-icons-png.flaticon.com/512/3625/3625060.png"),className="light-container")
                         ],className="d-flex flex-row justify-content-evenly"),
-                    ],className=""
+                    ],
                 )
             ),
             dbc.Card(
                 dbc.CardBody(
                     [
-                        html.H5("Fan Status", className="card-title"),
-                        html.P(className="text-warning",children="add fan gadget here"),
-                        html.Div(style={"display": "flex", " align-items": "center", "justify-content": "center",
-                                        }, children=html.Div(id="", className="mx-4")),
+                        html.H5("TEMP Control", className="card-title"),
+                        html.P(className="text-warning",children="Turn the fan > 24"),
+                        html.Div([ Gauge.render_gauge(app),
+                                   html.Img(id="fan_control",className="fan mt-2",src="https://cdn-icons-png.flaticon.com/512/545/545932.png")],
+                                 className="d-flex flex-row justify-content-evenly")
                     ],
                 )
             ),
@@ -97,7 +97,7 @@ def render_card(app: Dash) -> html.Div:
             dbc.Row([
                 dbc.Col(profile, width=4),
                 dbc.Col(cards, width=8),
-            ],className="")
+            ],)
 
 
         ]

@@ -7,6 +7,7 @@ from src.components.layout import create_layout
 import src.Controller.ControllerSystem as cs
 
 
+
 # These are the themes
 # dbc.themes.VAPOR = this is a cyberpunk theme
 # dbc.themes.SLATE = this is a dark faded theme

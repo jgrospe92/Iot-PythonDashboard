@@ -32,7 +32,7 @@ Add your custom css here
     /*border-radius: 50%;*/
 }
 
-.light{
+.light, .fan{
     height: 100px;
     object-fit: fill;
 }
