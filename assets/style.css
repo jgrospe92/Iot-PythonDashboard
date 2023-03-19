@@ -39,6 +39,7 @@ Add your custom css here
 
 .fan_controll {
     animation: rotation 1s infinite linear;
+    drop-shadow(8px 8px 10px gray);
 }
 
 @keyframes rotation {

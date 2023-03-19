@@ -7,6 +7,7 @@ import src.Controller.ControllerSystem as cs
 import dash_daq as daq
 from . import Colors
 from . import Gauge
+from . import Thermometer
 def render_card(app: Dash) -> html.Div:
     # Add the callbacks
     # Callbacks for the button switch
@@ -82,8 +83,8 @@ def render_card(app: Dash) -> html.Div:
                     [
                         html.H5("TEMP Control", className="card-title"),
                         html.P(className="text-warning",children="Turn the fan > 24"),
-                        html.Div([ Gauge.render_gauge(app),
-                                   html.Img(id="fan_control",className="fan mt-2 fan_controll",src="https://cdn-icons-png.flaticon.com/512/545/545932.png")],
+                        html.Div([ Gauge.render_gauge(app), Thermometer.render_thermo(app),
+                                   html.Img(id="fan_control",className="fan mt-4 fan_controll",src="https://cdn-icons-png.flaticon.com/512/545/545932.png")],
                                  className="d-flex flex-row justify-content-evenly")
                     ],
                 )
