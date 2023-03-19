@@ -37,9 +37,16 @@ Add your custom css here
     object-fit: fill;
 }
 
-light-on {
-    height: 100px;
-    width: 100px;
-    background-color: var(--YELLOW);
-    border-radius: 50%;
+.fan_controll {
+    animation: rotation 1s infinite linear;
 }
+
+@keyframes rotation {
+    from{
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
+
