@@ -21,7 +21,8 @@ control and monitor the system.
 ![LED_control](https://user-images.githubusercontent.com/77903214/226199328-e43ea068-e232-4dad-af93-d2dc6bbfe0ae.gif)
 
 ## Temperature Controll
-![fan_controll](https://user-images.githubusercontent.com/77903214/226199092-bb10ebb0-7779-44ba-930f-6a6620b5639b.gif)
+![fan_control](https://user-images.githubusercontent.com/77903214/226211001-8dbc55a2-8f59-43f4-8850-296829f73b0b.gif)
+
 
 
 ## Arduino & MAc
