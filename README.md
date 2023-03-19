@@ -39,5 +39,13 @@ control and monitor the system.
 - Look for the app.py and execute it
 - It should provide you a localhost address
 
+# Email Libraries
+- Red mail
+  - For sending email 
+  - [Documentation](https://red-mail.readthedocs.io/en/stable/tutorials/getting_started.html)
+- Redbox
+  - For receiving email
+  - [Documentation](https://red-box.readthedocs.io/en/latest/tutorials/getting_started.html)
+
 # Plottly Dash Documentation
 - https://dash.plotly.com/
