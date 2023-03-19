@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 # email config
-email_config.py
+src/Controller/email_config.py
