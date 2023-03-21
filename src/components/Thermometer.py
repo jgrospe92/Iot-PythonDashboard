@@ -13,19 +13,7 @@ theme = {
 }
 
 def render_thermo(app: Dash):
-    @app.callback(
-        Output(component_id='fan_control', component_property='className'),
-        Input(component_id='darktheme-daq-thermometer', component_property='value')
-    )
-    def email_func(value):
-        if value is None:
-            raise PreventUpdate
-        else:
-            if value > 24:
-                cs.send_email(value, 'peacewalkerify@gmail.com')
-                return 'fan fan_controll mt-4'
-            else :
-                return 'fan mt-4'
+
 
     thermo_layout = html.Div([daq.Thermometer(
         min=0,
