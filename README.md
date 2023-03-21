@@ -6,15 +6,7 @@ By utilizing sensors, actuators, motors, Single-board computers, and micro-contr
 design and simulate a smart home. They capture environmental information and make a decision
 based on received data. They also develop access control and occupancy systems and transfer all
 data to the cloud or a local server. Finally, they design and develop a web-based IoT dashboard to
-control and monitor the system. 
-
-# Virtual Environment
-## Windows
-- cd to the to main directory
-- Once inside Iot-PythonDashboard
-- Run the command `Scripts\activate` to activate the virtual environment
-- Your terminal should change into this (Iot-PythonDashboard)
-- To deactivate it, run the command `deactivate`
+control and monitor the system.
 
 # IOT dashboard Gadgets
 ## LED Controll
@@ -23,6 +15,13 @@ control and monitor the system.
 ## Temperature Controll
 ![fan_control](https://user-images.githubusercontent.com/77903214/226211001-8dbc55a2-8f59-43f4-8850-296829f73b0b.gif)
 
+# Virtual Environment
+## Windows
+- cd to the to main directory
+- Once inside Iot-PythonDashboard
+- Run the command `Scripts\activate` to activate the virtual environment
+- Your terminal should change into this (Iot-PythonDashboard)
+- To deactivate it, run the command `deactivate`
 
 
 ## Arduino & MAc
