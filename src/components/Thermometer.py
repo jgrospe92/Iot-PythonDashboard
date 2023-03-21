@@ -22,8 +22,7 @@ def render_thermo(app: Dash):
             raise PreventUpdate
         else:
             if value > 24:
-            #     cs.send_email(temp_value, 'peacewalkerify@gmail.com')
-                print('temp is ' + str(value))
+                cs.send_email(value, 'peacewalkerify@gmail.com')
                 return 'fan fan_controll mt-4'
             else :
                 return 'fan mt-4'
@@ -31,7 +30,7 @@ def render_thermo(app: Dash):
     thermo_layout = html.Div([daq.Thermometer(
         min=0,
         max=30,
-        value=10,
+        value=26,
         showCurrentValue=True,
         height=110,
         width=8,

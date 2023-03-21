@@ -47,12 +47,9 @@ def send_email(temp: int, email_to : str):
         subject="Alert",  # Email Subject
         sender="jgrospetest@gmail.com",
         receivers=[email_to],
-        text="""
-        The current temperature is {{ temp }},
-        would you like to turn on the fan?
-        **reply with (Yes/No)
-        """,
-        html="<h1>Hi, this is you IOT dashboad TEMP control</h1>",
+        text="The current temperature is {{ temp }},\n"
+            "would you like to turn on the fan? \n"
+            "**reply with (Yes/No) ",
         body_params=
         {
             "temp": temp
