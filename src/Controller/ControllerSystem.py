@@ -63,8 +63,8 @@ def check_email() -> bool:
     box = EmailBox(
         host="smtp.gmail.com",
         port=993,
-        username='jgrospetest@gmail.com',
-        password='suleiglvphkvgfbc')
+        username=email_config.username,
+        password=email_config.password)
 
     # Select Email
     inbox = box["INBOX"]
