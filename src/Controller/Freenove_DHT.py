@@ -7,7 +7,7 @@
 ########################################################################
 
 # if not working on the Rpi, comment line 18
-# import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time
 
 class DHT(object):
@@ -122,7 +122,7 @@ def loop():
         okRate = 100.0 * okCnt / sumCnt;
         print("sumCnt : %d, \t okRate : %.2f%% " % (sumCnt, okRate))
         print("chk : %d, \t Humidity : %.2f, \t Temperature : %.2f " % (chk, dht.humidity, dht.temperature))
-        time.sleep(3)
+        time.sleep(1)
 
 
 if __name__ == '__main__':

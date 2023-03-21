@@ -20,11 +20,12 @@ def render_thermo(app: Dash):
         print("thermo is " + str(value))
 
 
-
+#here must be changed for the value of cs.fan_spin
     thermo_layout = html.Div([daq.Thermometer(
         min=0,
         max=30,
-        value=26,
+        #here should be the temperature value that's used in Controller system
+        value=dht.temperature,
         showCurrentValue=True,
         height=110,
         width=8,

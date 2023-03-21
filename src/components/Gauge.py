@@ -34,7 +34,8 @@ def render_gauge(app : Dash) ->html.Div:
     return html.Div([dcc.Store(id="email_check",data={'status' : False}),daq.Gauge(
     id="gauge_id",
     color={"gradient":True,"ranges":{"green":[0,16],"yellow":[16,24],"red":[24,30]}},
-    value=25,
+    #cs.fan_spin values must be here
+    value=dht.temperature,
     label="Temperature",
     size=110,
     max=30,
