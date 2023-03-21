@@ -59,7 +59,7 @@ def render_card(app: Dash) -> html.Div:
             dbc.Card(
                 dbc.CardBody(
                     [
-                        html.H5("LED CONTROL", className="card-title"),
+                        html.H5("LED CONTROL", className="card-title", id="fake"),
                         html.P(
                             "Turn the switch on or off.",
                             className="card-text text-warning",
