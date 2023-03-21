@@ -84,7 +84,7 @@ def render_card(app: Dash) -> html.Div:
                         html.H5("TEMP Control", className="card-title"),
                         html.P(className="text-warning",children="Turn the fan > 24"),
                         html.Div([ Gauge.render_gauge(app), Thermometer.render_thermo(app),
-                                   html.Img(id="fan_control",className="fan mt-4 fan_controll",src="https://cdn-icons-png.flaticon.com/512/545/545932.png")],
+                                   html.Img(id="fan_control",className="fan mt-4 ",src="https://cdn-icons-png.flaticon.com/512/545/545932.png")],
                                  className="d-flex flex-row justify-content-evenly")
                     ],
                 )

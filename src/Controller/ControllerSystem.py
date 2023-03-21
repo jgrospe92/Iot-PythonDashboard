@@ -46,7 +46,7 @@ def send_email(temp: int, email_to : str):
     email.send(
         subject="Alert",  # Email Subject
         sender="jgrospetest@gmail.com",
-        receivers=['jgrospetest@gmail.com'],
+        receivers=[email_to],
         text="""
         The current temperature is {{ temp }},
         would you like to turn on the fan?
