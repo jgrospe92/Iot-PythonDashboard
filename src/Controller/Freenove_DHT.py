@@ -7,7 +7,7 @@
 ########################################################################
 
 # if not working on the Rpi, comment line 18
-# import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time
 
 class DHT(object):

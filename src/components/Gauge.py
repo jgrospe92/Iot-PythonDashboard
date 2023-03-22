@@ -7,16 +7,17 @@ def render_gauge(app : Dash) ->html.Div:
     @app.callback(
         #Output(component_id='fan_control', component_property='className'),
         Output(component_id='gauge_id', component_property='value'),
+        Output(component_id='darktheme-daq-thermometer', component_property='value'),
         Input('interval-component', 'n_intervals')
 
     )
     def email_func(n):
-        value = cs.dht_read_temparute();
-        if value > 24:
+        temperature, humidity = cs.dht_read_temparute()
+        if temperature > 24:
             #cs.send_email(value, 'peacewalkerify@gmail.com')
             print("temp above 24")
-            #return 'fan fan_controll mt-4'
-        return  value
+
+        return  temperature,humidity
 
     @app.callback(
         Output(component_id='fan_control', component_property='className'),
@@ -33,7 +34,7 @@ def render_gauge(app : Dash) ->html.Div:
     return html.Div([dcc.Store(id="email_check",data={'status' : False}),daq.Gauge(
     id="gauge_id",
     color={"gradient":True,"ranges":{"green":[0,16],"yellow":[16,24],"red":[24,30]}},
-    value=25,
+    value=0,
     label="Temperature",
     size=110,
     max=30,
