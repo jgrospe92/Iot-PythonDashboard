@@ -95,29 +95,3 @@ def check_email():
             elif 'STOP' == body[0]:
                 FAN_ON = False
                 EMAIL_STATUS = False
-
-        # iterate through the results
-        # for i, msg in enumerate(messages):
-        #     # Set message to read
-        #     msg.read()
-        #
-        #     # Get Header information
-        #     sender = msg.from_
-        #     subject = msg.subject
-        #     # Get Text Body of the email
-        #     body = msg.text_body
-        #     # print the content of the email
-        #     # print(
-        #     #     f"""
-        #     #            Sender : {msg.from_}
-        #     #            subject : {subject}
-        #     #            Content : {body}
-        #     #            """)
-        #
-        #     print(body)
-        #     if body == 'YES':
-        #         print('BODY IS YES')
-        #         FAN_ON = True
-        #     elif body == "STOP":
-        #         FAN_ON = False
-        #         EMAIL_STATUS = False
