@@ -11,6 +11,8 @@ from . import email_config
 # Set a global flag
 isActive = 0  # this tells the program if the light is on or off
 LED = 0
+EMAIL_STATUS = False
+FAN_ON = False
 
 
 def set_up():
@@ -37,68 +39,85 @@ def light_controller() -> int:
 
 # sending email
 def send_email(temp: int, email_to : str):
-    email = EmailSender(
-        host="smtp.gmail.com",
-        port=587,
-        username=email_config.username,
-        password=email_config.password)
+    global EMAIL_STATUS
+    if not EMAIL_STATUS:
+        email = EmailSender(
+            host="smtp.gmail.com",
+            port=587,
+            username=email_config.username,
+            password=email_config.password)
 
-    email.send(
-        subject="Alert",  # Email Subject
-        sender="jgrospetest@gmail.com",
-        receivers=[email_to],
-        text="The current temperature is {{ temp }},\n"
-            "would you like to turn on the fan? \n"
-            "**reply with (Yes/No) ",
-        body_params=
-        {
-            "temp": temp
-        }
-    )
+        email.send(
+            subject="Alert",  # Email Subject
+            sender="jgrospetest@gmail.com",
+            receivers=[email_to],
+            text="The current temperature is {{ temp }},\n"
+                "would you like to turn on the fan? \n"
+                "**reply with (YES/NO) or (STOP) to turn the fan off ",
+            body_params=
+            {
+                "temp": temp
+            }
+        )
+    EMAIL_STATUS = True
+    print("EMAIL STATUS : ", end="")
+    print(EMAIL_STATUS)
     print("Message Sent!")
 
 
 # Receiving Email
-def check_email() -> bool:
-    box = EmailBox(
-        host="smtp.gmail.com",
-        port=993,
-        username=email_config.username,
-        password=email_config.password)
+def check_email():
+    global EMAIL_STATUS, FAN_ON
+    print("EMAIL STATUS : ", end="")
+    print(EMAIL_STATUS)
+    print("FAN STATUS : ", end="")
+    print(FAN_ON)
+    msg = ""
+    if EMAIL_STATUS:
+        box = EmailBox(
+            host="smtp.gmail.com",
+            port=993,
+            username=email_config.username,
+            password=email_config.password)
 
-    # Select Email
-    inbox = box["INBOX"]
+        # Select Email
+        inbox = box["INBOX"]
 
-    # query and process messages
-    messages = inbox.search(subject="Alert", unseen=False)
+        # query and process messages
+        messages = inbox.search(subject="Alert", unseen=True)
+        if messages:
+            messages[0].read()
+            body = messages[0].text_body.split()
+            print(body)
+            if 'YES' == body[0]:
+                print('BODY IS YES')
+                FAN_ON = True
+            elif 'STOP' == body[0]:
+                FAN_ON = False
+                EMAIL_STATUS = False
 
-    # iterate through the results
-    for i, msg in enumerate(messages):
-        # Set message to read
-        msg.read()
-
-        # Get Header information
-        sender = msg.from_
-        subject = msg.subject
-        date = msg.date
-
-        # Get Text Body of the email
-        body = msg.text_body
-
-        # get HTML body
-        html_body = msg.html_body
-
-        # print the content of the email
-        print(
-            f"""
-                   Sender : {msg.from_}
-                   subject : {subject}
-                   date : {date}
-                   Content : {body}
-                   """)
-
-        if subject == "Alert":
-            if body == "Yes":
-                return True
-
-    return False
+        # iterate through the results
+        # for i, msg in enumerate(messages):
+        #     # Set message to read
+        #     msg.read()
+        #
+        #     # Get Header information
+        #     sender = msg.from_
+        #     subject = msg.subject
+        #     # Get Text Body of the email
+        #     body = msg.text_body
+        #     # print the content of the email
+        #     # print(
+        #     #     f"""
+        #     #            Sender : {msg.from_}
+        #     #            subject : {subject}
+        #     #            Content : {body}
+        #     #            """)
+        #
+        #     print(body)
+        #     if body == 'YES':
+        #         print('BODY IS YES')
+        #         FAN_ON = True
+        #     elif body == "STOP":
+        #         FAN_ON = False
+        #         EMAIL_STATUS = False

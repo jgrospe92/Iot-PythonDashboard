@@ -1,3 +1,4 @@
+import dash
 import dash_daq as daq
 from dash import Dash, html, Input, Output, dcc
 import src.Controller.ControllerSystem as cs
@@ -14,7 +15,7 @@ def render_gauge(app : Dash) ->html.Div:
         print("data status ", end="")
         print(data['status'])
         if value > 24 and not data['status']:
-            # cs.send_email(value, 'peacewalkerify@gmail.com')
+            cs.send_email(value, 'peacewalkerify@gmail.com')
             print(value)
             #return 'fan fan_controll mt-4'
             return {'status' : True}
@@ -23,13 +24,23 @@ def render_gauge(app : Dash) ->html.Div:
             return {'status' : False}
 
     @app.callback(
-        Output('fake', 'children'),
-        Input('email_check', 'data')
+        Output(component_id='fan_control', component_property='className'),
+        Input('interval-component', 'n_intervals'),
     )
-    def test(data):
-        print('data is ', end="")
-        print(data['status'])
+    def process_email(n):
+        cs.check_email()
+        if cs.EMAIL_STATUS and cs.FAN_ON:
+            return 'fan fan_controll mt-4'
+        else:
+            return 'fan mt-4'
 
+        # if cs.check_email():
+        #     if cs.EMAIL_STATUS:
+        #         return 'fan fan_controll mt-4'
+        # else:
+        #     if not cs.EMAIL_STATUS:
+        #         return 'fan mt-4'
+        #return 'fan fan_controll mt-4' if cs.check_email() else 'fan mt-4'
 
     return html.Div([dcc.Store(id="email_check",data={'status' : False}),daq.Gauge(
     id="gauge_id",
