@@ -3,6 +3,7 @@
 from redmail import EmailSender
 from redbox import EmailBox
 from . import email_config
+from . import Freenove_DHT as DHT
 
 # Import Rpi and sleep libraries
 # Uncomment this if your working on your GPIO
@@ -38,7 +39,7 @@ def light_controller() -> int:
 
 
 # sending email
-def send_email(temp: int, email_to : str):
+def send_email(temp: int, email_to: str):
     global EMAIL_STATUS
     if not EMAIL_STATUS:
         email = EmailSender(
@@ -52,8 +53,8 @@ def send_email(temp: int, email_to : str):
             sender="jgrospetest@gmail.com",
             receivers=[email_to],
             text="The current temperature is {{ temp }},\n"
-                "would you like to turn on the fan? \n"
-                "**reply with (YES/NO) or (STOP) to turn the fan off ",
+                 "would you like to turn on the fan? \n"
+                 "**reply with (YES/NO) or (STOP) to turn the fan off ",
             body_params=
             {
                 "temp": temp
@@ -95,3 +96,22 @@ def check_email():
             elif 'STOP' == body[0]:
                 FAN_ON = False
                 EMAIL_STATUS = False
+
+
+
+
+def dht_read_temparute():
+    dht = DHT(11)
+    sumCnt = 0
+    okCnt = 0
+    chk = dht.readDHT11()
+    if (chk is 0):
+        okCnt += 1
+    okRate = 100.0 * okCnt / sumCnt;
+    #print("sumCnt : %d, \t okRate : %.2f%% " % (sumCnt, okRate))
+    humidity =  dht.humidity
+    temperature = dht.temperature
+    #print("chk : %d, \t Humidity : %.2f, \t Temperature : %.2f " % (chk, dht.humidity, dht.temperature))
+    print("Humidity : %.2f, \t Temperature : %.2f " % (humidity, temperature))
+    return  temperature
+    #time.sleep(3)

@@ -6,22 +6,17 @@ import src.Controller.ControllerSystem as cs
 def render_gauge(app : Dash) ->html.Div:
     @app.callback(
         #Output(component_id='fan_control', component_property='className'),
-        Output('email_check','data'),
-        Input(component_id='gauge_id', component_property='value'),
-        Input('email_check', 'data')
+        Output(component_id='gauge_id', component_property='value'),
+        Input('interval-component', 'n_intervals')
 
     )
-    def email_func(value, data):
-        print("data status ", end="")
-        print(data['status'])
-        if value > 24 and not data['status']:
-            cs.send_email(value, 'peacewalkerify@gmail.com')
-            print(value)
+    def email_func(n):
+        value = cs.dht_read_temparute();
+        if value > 24:
+            #cs.send_email(value, 'peacewalkerify@gmail.com')
+            print("temp above 24")
             #return 'fan fan_controll mt-4'
-            return {'status' : True}
-        else:
-            #return 'fan mt-4'
-            return {'status' : False}
+        return  value
 
     @app.callback(
         Output(component_id='fan_control', component_property='className'),
@@ -34,13 +29,6 @@ def render_gauge(app : Dash) ->html.Div:
         else:
             return 'fan mt-4'
 
-        # if cs.check_email():
-        #     if cs.EMAIL_STATUS:
-        #         return 'fan fan_controll mt-4'
-        # else:
-        #     if not cs.EMAIL_STATUS:
-        #         return 'fan mt-4'
-        #return 'fan fan_controll mt-4' if cs.check_email() else 'fan mt-4'
 
     return html.Div([dcc.Store(id="email_check",data={'status' : False}),daq.Gauge(
     id="gauge_id",

@@ -23,7 +23,7 @@ def render_thermo(app: Dash):
 
     thermo_layout = html.Div([daq.Thermometer(
         min=0,
-        max=30,
+        max=100,
         value=26,
         showCurrentValue=True,
         height=110,
