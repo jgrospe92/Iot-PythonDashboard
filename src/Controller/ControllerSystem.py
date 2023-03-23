@@ -4,11 +4,12 @@ from redmail import EmailSender
 from redbox import EmailBox
 from . import email_config
 import time
+from time import sleep
 
 # Import Rpi and sleep libraries
 # Uncomment this if your working on your GPIO
 import RPi.GPIO as GPIO
-# from time import sleep
+
 # Set a global flag
 isActive = 0  # this tells the program if the light is on or off
 LED = 0
@@ -31,7 +32,8 @@ class DHT(object):
     def __init__(self, pin):
         self.pin = pin
         self.bits = [0, 0, 0, 0, 0]
-        GPIO.setmode(GPIO.BOARD)
+        #GPIO.setmode(GPIO.BOARD)
+        GPIO.setmode(GPIO.BCM)
 
     # Read DHT sensor, store the original data in bits[]
     def readSensor(self, pin, wakeupDelay):
@@ -198,14 +200,30 @@ def check_email():
                 EMAIL_STATUS = False
 
 
-
-
-def dht_read_temparute():
+def dht11_read():
     dht = DHT(11)
     sumCnt = 0
     okCnt = 0
-    chk = dht.readDHT11()
+    #chk = dht.readDHT11()
     humidity =  dht.humidity
     temperature = dht.temperature
     print("Humidity : %.2f, \t Temperature : %.2f " % (humidity, temperature))
     return  temperature, humidity
+
+def turn_fan_on(state):
+    #GPIO.setmode(GPIO.BOARD)
+    #GPIO.setwarnings(False)
+    print("RUN THE MOTOR")
+    Motor1 = 22  # Enable Pin 22 , 15
+    Motor2 = 23  # Input Pin 23 , 16
+    Motor3 = 12  # Input Pin 12, 32
+    GPIO.setup(Motor1, GPIO.OUT)
+    GPIO.setup(Motor2, GPIO.OUT)
+    GPIO.setup(Motor3, GPIO.OUT)
+    if state == "ON":
+        GPIO.output(Motor1, GPIO.HIGH)
+        GPIO.output(Motor2, GPIO.LOW)
+        GPIO.output(Motor3, GPIO.HIGH)
+    elif state == "OFF":
+        GPIO.output(Motor1, GPIO.LOW)
+        GPIO.cleanup()

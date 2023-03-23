@@ -13,11 +13,11 @@ theme = {
 }
 
 def render_thermo(app: Dash):
-    @app.callback(
-        Output("fan_control", "style"),
-        Input('darktheme-daq-thermometer', 'value'))
-    def thermo_callback(value):
-        print("thermo is " + str(value))
+    # @app.callback(
+    #     Output("fan_control", "style"),
+    #     Input('darktheme-daq-thermometer', 'value'))
+    # def thermo_callback(value):
+    #     print("thermo is " + str(value))
 
 
 
@@ -28,7 +28,6 @@ def render_thermo(app: Dash):
         showCurrentValue=True,
         height=110,
         width=8,
-        units="C",
         id='darktheme-daq-thermometer',
         className='dark-theme-control')])
 
