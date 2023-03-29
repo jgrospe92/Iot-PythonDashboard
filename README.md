@@ -44,7 +44,9 @@ control and monitor the system.
 - Check the requirements.txt for the names
 
 # How to install SqLite Browser
+- NOTE: You don't have to be in virtual environment to install it
 - Run this command `sudo apt-get install sqlitebrowser`
+- Once installed, check the raspberry icon under programming
 
 # How to run the project
 - Look for the app.py and execute it
