@@ -43,6 +43,9 @@ control and monitor the system.
 - `pip install {the name of the dependency}`
 - Check the requirements.txt for the names
 
+# How to install SqLite Browser
+- Run this command `sudo apt-get install sqlitebrowser`
+
 # How to run the project
 - Look for the app.py and execute it
 - It should provide you a localhost address
@@ -56,7 +59,7 @@ control and monitor the system.
   - [Documentation](https://red-box.readthedocs.io/en/latest/tutorials/getting_started.html)
 - :warning: IMPORTANT In order for the email function to work, you have to create email_config.py in src/Controller/
 - Inside that python file add you credentials as key value pair
-- example : `username: "your usename` `password : "your password"`
+- example : `username = "your usename` `password = "your password"`
 
 # Plottly Dash Documentation
 - https://dash.plotly.com/
