@@ -70,11 +70,11 @@ def render_card(app: Dash) -> html.Div:
                                 on=True,
                                 size=100,
                                 color=Colors.GREEN,
+                                className="order-2"
                             ),
                             html.Div(id='power-button-result-1'),
-                            #html.Div(id="lightbulb", className="light-off"),
-                            html.Div(html.Img(id="lightbulb",className="light",src="https://cdn-icons-png.flaticon.com/512/3625/3625060.png"),className="light-container")
-                        ],className="d-flex flex-row justify-content-evenly"),
+                            html.Div(html.Img(id="lightbulb",className="light order-1",src="https://cdn-icons-png.flaticon.com/512/3625/3625060.png"),className="light-container")
+                        ],className="d-flex flex-column justify-content-center align-items-center"),
                     ],
                 )
             ),
