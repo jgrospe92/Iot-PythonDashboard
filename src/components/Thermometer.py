@@ -13,18 +13,10 @@ theme = {
 }
 
 def render_thermo(app: Dash):
-    # @app.callback(
-    #     Output("fan_control", "style"),
-    #     Input('darktheme-daq-thermometer', 'value'))
-    # def thermo_callback(value):
-    #     print("thermo is " + str(value))
-
-
-
     thermo_layout = html.Div([daq.Thermometer(
         min=0,
         max=100,
-        value=26,
+        value=2,
         showCurrentValue=True,
         height=110,
         width=8,

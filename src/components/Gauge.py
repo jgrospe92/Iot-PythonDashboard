@@ -4,6 +4,7 @@ from dash import Dash, html, Input, Output, dcc
 import src.Controller.ControllerSystem as cs
 
 def render_gauge(app : Dash) ->html.Div:
+
     @app.callback(
         #Output(component_id='fan_control', component_property='className'),
         Output(component_id='gauge_id', component_property='value'),
@@ -12,7 +13,7 @@ def render_gauge(app : Dash) ->html.Div:
 
     )
     def email_func(n):
-        temperature, humidity = cs.dht11_read()
+        #temperature, humidity = cs.dht11_read()
         if temperature > 20:
             #cs.send_email(value, 'peacewalkerify@gmail.com')
             print("temp above 20")
@@ -24,14 +25,13 @@ def render_gauge(app : Dash) ->html.Div:
         Input('interval-component', 'n_intervals'),
     )
     def process_email(n):
-        cs.check_email()
+        #cs.check_email()
         if cs.EMAIL_STATUS and cs.FAN_ON:
-            cs.turn_fan_on("ON")
+            #cs.turn_fan_on("ON")
             return 'fan fan_controll mt-4'
         else:
-            cs.turn_fan_on("OFF")
+            #cs.turn_fan_on("OFF")
             return 'fan mt-4'
-
 
     return html.Div([dcc.Store(id="email_check",data={'status' : False}),daq.Gauge(
     id="gauge_id",
