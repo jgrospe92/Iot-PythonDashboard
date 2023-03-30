@@ -8,6 +8,7 @@ import dash_daq as daq
 from . import Colors
 from . import Gauge
 from . import Thermometer
+from . import GraduatedBar
 def render_card(app: Dash) -> html.Div:
     # Add the callbacks
     # Callbacks for the button switch
@@ -65,14 +66,16 @@ def render_card(app: Dash) -> html.Div:
                             className="card-text text-warning",
                         ),
                         html.Div([
-                            daq.PowerButton(
-                                id='our-power-button-1',
-                                on=True,
-                                size=100,
-                                color=Colors.GREEN,
-                                className="order-2"
-                            ),
-                            html.Div(id='power-button-result-1'),
+                            # daq.PowerButton(
+                            #     id='our-power-button-1',
+                            #     on=True,
+                            #     size=100,
+                            #     color=Colors.GREEN,
+                            #     className="order-2"
+                            # ),
+                            # html.Div(id='power-button-result-1')
+                            GraduatedBar.render_GraduatedBar(app)
+                            ,
                             html.Div(html.Img(id="lightbulb",className="light order-1",src="https://cdn-icons-png.flaticon.com/512/3625/3625060.png"),className="light-container")
                         ],className="d-flex flex-column justify-content-center align-items-center"),
                     ],
