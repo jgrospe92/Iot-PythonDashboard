@@ -17,6 +17,8 @@ LED = 0
 EMAIL_STATUS = False
 # FAN_ON is a boolean flag that indicates if the fan is on
 FAN_ON = False
+# global DHT
+dht = None;
 
 
 """
@@ -131,7 +133,7 @@ DESC: Important! this set ups all the required pins, setmode and setup
     needed for the circuit to work
 """
 def set_up():
-    global LED
+    global LED, dht
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BOARD)
     # INITIALIZE BCM PINS
@@ -190,11 +192,12 @@ def send_email(temp: int, email_to: str):
                 "temp": temp
             }
         )
+        print("Message Sent!")
     # Once the email is sent, Set EMAIL_STATUS to True, so it wont keep sending it
     EMAIL_STATUS = True
     print("EMAIL STATUS : ", end="")
     print(EMAIL_STATUS)
-    print("Message Sent!")
+
 
 """
 @PARAMS
