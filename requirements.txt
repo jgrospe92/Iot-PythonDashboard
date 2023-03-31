@@ -4,3 +4,4 @@ dash-daq
 redmail
 redbox
 dash-bootstrap-templates
+paho-mqtt

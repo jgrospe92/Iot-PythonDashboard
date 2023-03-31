@@ -63,5 +63,11 @@ control and monitor the system.
 - Inside that python file add you credentials as key value pair
 - example : `username = "your usename` `password = "your password"`
 
+# MQTT Broker
+- [Paho Broker](https://pypi.org/project/paho-mqtt/)
+- NOTE: You must create `broker_IP.py` in src/Controller/
+- Inside the python file create a variable `ipaddress = 'BROKER IP ADDRESS'`
+- Replace `BROKER IP ADDRESS` with the right MQTT Broker IP address 
+
 # Plottly Dash Documentation
 - https://dash.plotly.com/
