@@ -15,7 +15,7 @@ def render_gauge(app : Dash) ->html.Div:
     def email_func(n):
         temperature, humidity = cs.dht11_read()
         if temperature > 20:
-            cs.send_email(value, 'peacewalkerify@gmail.com')
+            cs.send_email(temperature, 'peacewalkerify@gmail.com')
             print("temp above 20")
 
         return  temperature,humidity

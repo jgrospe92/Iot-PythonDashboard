@@ -145,6 +145,14 @@ def set_up():
     # DHT SetUp
     dht = DHT(11)
 
+    # motor setup
+    Motor1 = 15  # Enable Pin GPIO22
+    Motor2 = 13  # Input Pin GPIO27
+    Motor3 = 29  # Input Pin GPIO05
+    GPIO.setup(Motor1, GPIO.OUT)
+    GPIO.setup(Motor2, GPIO.OUT)
+    GPIO.setup(Motor3, GPIO.OUT)
+
 """
 @PARAMS
 @RETURN int 
@@ -247,10 +255,9 @@ def check_email():
 DESC: reads the dht and returns humidity and temperature 
 """
 def dht11_read():
+    global dht
     #dht = DHT(11)
-    sumCnt = 0
-    okCnt = 0
-    # chk = dht.readDHT11()
+    chk = dht.readDHT11()
     humidity = dht.humidity
     temperature = dht.temperature
     print("Humidity : %.2f, \t Temperature : %.2f " % (humidity, temperature))
@@ -262,15 +269,7 @@ def dht11_read():
 DESC: if argument is 'on' turn on fan, off otherwise
 """
 def turn_fan_on(state):
-    # GPIO.setmode(GPIO.BOARD)
-    # GPIO.setwarnings(False)
     print("RUN THE MOTOR")
-    Motor1 = 22  # Enable Pin 22 , 15
-    Motor2 = 23  # Input Pin 23 , 16
-    Motor3 = 12  # Input Pin 12, 32
-    GPIO.setup(Motor1, GPIO.OUT)
-    GPIO.setup(Motor2, GPIO.OUT)
-    GPIO.setup(Motor3, GPIO.OUT)
     if state == "ON":
         GPIO.output(Motor1, GPIO.HIGH)
         GPIO.output(Motor2, GPIO.LOW)
