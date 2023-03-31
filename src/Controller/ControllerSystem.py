@@ -278,4 +278,4 @@ def turn_fan_on(state):
         GPIO.output(Motor3, GPIO.HIGH)
     elif state == "OFF":
         GPIO.output(Motor1, GPIO.LOW)
-        GPIO.cleanup()
+        
