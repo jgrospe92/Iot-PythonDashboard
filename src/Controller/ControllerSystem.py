@@ -8,7 +8,7 @@ from time import sleep
 
 # Import Rpi and sleep libraries
 # Uncomment this if your working on your GPIO
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 # Set a global flag
 isActive = 0  # this tells the program if the light is on or off
@@ -40,7 +40,7 @@ class DHT(object):
         self.pin = pin
         self.bits = [0, 0, 0, 0, 0]
         # GPIO.setmode(GPIO.BOARD)
-        GPIO.setmode(GPIO.BCM)
+        #GPIO.setmode(GPIO.BCM)
 
     # Read DHT sensor, store the original data in bits[]
     def readSensor(self, pin, wakeupDelay):
@@ -133,12 +133,15 @@ DESC: Important! this set ups all the required pins, setmode and setup
 def set_up():
     global LED
     GPIO.setwarnings(False)
-    GPIO.setmode(GPIO.BCM)
+    GPIO.setmode(GPIO.BOARD)
     # INITIALIZE BCM PINS
-    LED = 23
+    #LED = 23
 
     # SET UP
-    GPIO.setup(LED, GPIO.OUT, initial=GPIO.LOW)
+    #GPIO.setup(LED, GPIO.OUT, initial=GPIO.LOW)
+
+    # DHT SetUp
+    dht = DHT(11)
 
 """
 @PARAMS
@@ -241,7 +244,7 @@ def check_email():
 DESC: reads the dht and returns humidity and temperature 
 """
 def dht11_read():
-    dht = DHT(11)
+    #dht = DHT(11)
     sumCnt = 0
     okCnt = 0
     # chk = dht.readDHT11()
