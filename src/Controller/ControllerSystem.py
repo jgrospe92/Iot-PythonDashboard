@@ -19,6 +19,11 @@ EMAIL_STATUS = False
 FAN_ON = False
 # global DHT
 dht = None;
+# MOTO PINS
+Motor1 = 15  # Enable Pin GPIO22
+Motor2 = 13  # Input Pin GPIO27
+Motor3 = 29  # Input Pin GPIO05
+
 
 
 """
@@ -146,9 +151,6 @@ def set_up():
     dht = DHT(11)
 
     # motor setup
-    Motor1 = 15  # Enable Pin GPIO22
-    Motor2 = 13  # Input Pin GPIO27
-    Motor3 = 29  # Input Pin GPIO05
     GPIO.setup(Motor1, GPIO.OUT)
     GPIO.setup(Motor2, GPIO.OUT)
     GPIO.setup(Motor3, GPIO.OUT)

@@ -27,10 +27,10 @@ def render_gauge(app : Dash) ->html.Div:
     def process_email(n):
         cs.check_email()
         if cs.EMAIL_STATUS and cs.FAN_ON:
-            #cs.turn_fan_on("ON")
+            cs.turn_fan_on("ON")
             return 'fan fan_controll mt-4'
         else:
-            #cs.turn_fan_on("OFF")
+            cs.turn_fan_on("OFF")
             return 'fan mt-4'
 
     return html.Div([dcc.Store(id="email_check",data={'status' : False}),daq.Gauge(
