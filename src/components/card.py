@@ -85,11 +85,11 @@ def render_card(app: Dash) -> html.Div:
                 dbc.CardBody(
                     [
                         html.H5("TEMP Control", className="card-title"),
-                        dcc.Interval(
-                            id="interval-component",
-                            interval=1 * 2000, # every two seconds
-                            n_intervals=0
-                        ),
+                        # dcc.Interval(
+                        #     id="interval-component",
+                        #     interval=1 * 2000, # every two seconds
+                        #     n_intervals=0
+                        # ),
                         html.P(className="text-warning",children="Turn the fan > 24"),
                         html.Div([ Gauge.render_gauge(app), Thermometer.render_thermo(app),
                                    html.Img(id="fan_control",className="fan mt-4",src="https://cdn-icons-png.flaticon.com/512/545/545932.png")],

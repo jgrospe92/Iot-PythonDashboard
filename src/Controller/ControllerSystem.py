@@ -8,7 +8,7 @@ from time import sleep
 
 # Import Rpi and sleep libraries
 # Uncomment this if your working on your GPIO
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 
 # Set a global flag
 isActive = 0  # this tells the program if the light is on or off

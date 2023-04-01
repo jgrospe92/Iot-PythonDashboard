@@ -24,7 +24,7 @@ def main() -> None:
         
         When you just want to work on the Dashboard, comment out cs.set_up()
     '''
-    cs.set_up()
+    #cs.set_up()
 
     app = Dash(__name__, update_title=None, external_stylesheets=[dbc.themes.QUARTZ])
     app.title = "IOT DashBoard"
