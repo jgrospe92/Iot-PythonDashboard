@@ -1,6 +1,7 @@
 # This is a sample of a component class
 import time
 import dash_bootstrap_components as dbc
+from dash.exceptions import PreventUpdate
 from dash import html, Dash, dcc
 from dash.dependencies import Input, Output
 import src.Controller.ControllerSystem as cs
@@ -10,7 +11,20 @@ from . import Gauge
 from . import Thermometer
 from . import GraduatedBar
 def render_card(app: Dash) -> html.Div:
+    email_sent = "https://cdn-icons-png.flaticon.com/512/2593/2593557.png"
+    email_default = "https://cdn-icons-png.flaticon.com/512/896/896673.png"
     # Add the callbacks
+    # email icon callbacks
+    @app.callback(
+        Output(component_id='email_statusID', component_property="src"),
+        Input('fake', 'on'),
+    )
+    def update_email_icon(n_clicks):
+        if n_clicks is None:
+            raise PreventUpdate
+        else :
+            return email_sent
+
     # Callbacks for the button switch
     @app.callback(
         # Output(component_id='btn-activate', component_property='children'),
@@ -66,17 +80,14 @@ def render_card(app: Dash) -> html.Div:
                             className="card-text text-warning",
                         ),
                         html.Div([
-                            # daq.PowerButton(
-                            #     id='our-power-button-1',
-                            #     on=True,
-                            #     size=100,
-                            #     color=Colors.GREEN,
-                            #     className="order-2"
-                            # ),
-                            # html.Div(id='power-button-result-1')
+                            html.Img(id="email_statusID", className="email_icon",
+                                     src=email_default),
+                            html.Img(id="lightbulb", className="light order-1",
+                                     src="https://cdn-icons-png.flaticon.com/512/3625/3625060.png")],
+                            className="d-flex justify-content-evenly" ),
+                        html.Div([
                             GraduatedBar.render_GraduatedBar(app)
                             ,
-                            html.Div(html.Img(id="lightbulb",className="light order-1",src="https://cdn-icons-png.flaticon.com/512/3625/3625060.png"),className="light-container")
                         ],className="d-flex flex-column justify-content-center align-items-center"),
                     ],
                 )

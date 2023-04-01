@@ -5,16 +5,23 @@ from redbox import EmailBox
 from . import email_config
 import time
 from time import sleep
+from datetime import datetime
 
 # Import Rpi and sleep libraries
 # Uncomment this if your working on your GPIO
 #import RPi.GPIO as GPIO
 
 # Set a global flag
+# Photoresistor Value
+sensorValue = 0;
+
 isActive = 0  # this tells the program if the light is on or off
-LED = 0
+LED = 16 # Enable pin GPIO23
+LED_ON = False # status of the LED
 # EMAIL_STATUS is a boolean flag that indicates if the email is sent
 EMAIL_STATUS = False
+# email status for the light sensor
+EMAIL_SENSOR_STATUS = False
 # FAN_ON is a boolean flag that indicates if the fan is on
 FAN_ON = False
 # global DHT
@@ -141,19 +148,18 @@ def set_up():
     global LED, dht
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BOARD)
-    # INITIALIZE BCM PINS
-    #LED = 23
+    # INITIALIZE BOARD PINS
 
     # SET UP
-    #GPIO.setup(LED, GPIO.OUT, initial=GPIO.LOW)
+    GPIO.setup(LED, GPIO.OUT, initial=GPIO.LOW)
 
     # DHT SetUp
-    dht = DHT(11)
+    #dht = DHT(11)
 
     # motor setup
-    GPIO.setup(Motor1, GPIO.OUT)
-    GPIO.setup(Motor2, GPIO.OUT)
-    GPIO.setup(Motor3, GPIO.OUT)
+    # GPIO.setup(Motor1, GPIO.OUT)
+    # GPIO.setup(Motor2, GPIO.OUT)
+    # GPIO.setup(Motor3, GPIO.OUT)
 
 """
 @PARAMS
@@ -173,6 +179,15 @@ def light_controller() -> int:
         # GPIO.output(LED, 1)
         return 1
 
+"""
+@PARAMS
+@RETURN
+DESC: turns the LED on based on the light sensor value
+"""
+def light_switch_sensor() -> bool:
+    if sensorValue < 400:
+        GPIO.output(LED,1)
+        return  true
 
 """
 @PARAMS temp : int, email_to : str
@@ -200,6 +215,40 @@ def send_email(temp: int, email_to: str):
             body_params=
             {
                 "temp": temp
+            }
+        )
+        print("Message Sent!")
+    # Once the email is sent, Set EMAIL_STATUS to True, so it wont keep sending it
+    EMAIL_STATUS = True
+    print("EMAIL STATUS : ", end="")
+    print(EMAIL_STATUS)
+
+"""
+@PARAMS
+@RETURN
+DESC:
+"""
+def send_email_light_sensor(sensorValue: int, email_to: str):
+    global EMAIL_SENSOR_STATUS
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    # If the EMAIL_STATUS is False, then we can send the email
+    if not EMAIL_SENSOR_STATUS:
+        # create an instance of email
+        email = EmailSender(
+            host="smtp.gmail.com",
+            port=587,
+            username=email_config.username,
+            password=email_config.password)
+        # send the email with the temperature value
+        email.send(
+            subject="Alert",  # Email Subject
+            sender="jgrospetest@gmail.com",
+            receivers=[email_to],
+            text="The light is on at {{ time }},\n",
+            body_params=
+            {
+                "time": current_time
             }
         )
         print("Message Sent!")
@@ -278,4 +327,5 @@ def turn_fan_on(state):
         GPIO.output(Motor3, GPIO.HIGH)
     elif state == "OFF":
         GPIO.output(Motor1, GPIO.LOW)
-        
+
+
