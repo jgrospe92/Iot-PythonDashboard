@@ -8,7 +8,7 @@ import broker_IP
 
 
 # Don't forget to change the variables for the MQTT broker!
-mqtt_topic = "Your Topic"
+mqtt_topic = "IoTlab/ESP"
 mqtt_broker_ip = broker_IP.ipaddress
 
 client = mqtt.Client()
