@@ -21,7 +21,6 @@ def render_GraduatedBar(app : dash):
     def update_light_sensor(n):
         value = round(cs.sensorValue/ 100)
         return value
-
     graduatedbar_layout = daq.GraduatedBar(
     color={"gradient":True,
            "ranges":{
@@ -29,7 +28,6 @@ def render_GraduatedBar(app : dash):
                "#EFBF3E":[5,7],
                "#F9FF2F":[7,10]}},
     showCurrentValue=True,
-    value=0,
     label='light intensity',
     labelPosition='bottom',
     id="LDR_bar_id",

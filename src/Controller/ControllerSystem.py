@@ -13,11 +13,12 @@ from datetime import datetime
 
 # Set a global flag
 # Photoresistor Value
-sensorValue = 0;
+sensorValue = 1000;
 
 isActive = 0  # this tells the program if the light is on or off
 LED = 16 # Enable pin GPIO23
 LED_ON = False # status of the LED
+LOW_LIGHT = False
 # EMAIL_STATUS is a boolean flag that indicates if the email is sent
 EMAIL_STATUS = False
 # email status for the light sensor
@@ -185,9 +186,14 @@ def light_controller() -> int:
 DESC: turns the LED on based on the light sensor value
 """
 def light_switch_sensor() -> bool:
+    global LOW_LIGHT
     if sensorValue < 400:
-        GPIO.output(LED,1)
-        return  true
+        #GPIO.output(LED,1)
+        LOW_LIGHT = True
+        return  True
+    else:
+        LOW_LIGHT = False
+        return False
 
 """
 @PARAMS temp : int, email_to : str
@@ -224,16 +230,16 @@ def send_email(temp: int, email_to: str):
     print(EMAIL_STATUS)
 
 """
-@PARAMS
+@PARAMS receiver email address
 @RETURN
-DESC:
+DESC: send an email with the time
 """
-def send_email_light_sensor(sensorValue: int, email_to: str):
-    global EMAIL_SENSOR_STATUS
+def send_email_light_sensor(email_to: str):
+    global EMAIL_SENSOR_STATUS, LOW_LIGHT
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
     # If the EMAIL_STATUS is False, then we can send the email
-    if not EMAIL_SENSOR_STATUS:
+    if not EMAIL_SENSOR_STATUS and LOW_LIGHT:
         # create an instance of email
         email = EmailSender(
             host="smtp.gmail.com",
@@ -252,11 +258,7 @@ def send_email_light_sensor(sensorValue: int, email_to: str):
             }
         )
         print("Message Sent!")
-    # Once the email is sent, Set EMAIL_STATUS to True, so it wont keep sending it
-    EMAIL_STATUS = True
-    print("EMAIL STATUS : ", end="")
-    print(EMAIL_STATUS)
-
+        EMAIL_SENSOR_STATUS = True
 
 """
 @PARAMS
@@ -328,5 +330,10 @@ def turn_fan_on(state):
     elif state == "OFF":
         GPIO.output(Motor1, GPIO.LOW)
 
+"""
+@PARAMS
+@RETURN int
+DESC: returns the value of the light sensor
+"""
 def get_ligth_sensor_value() -> int:
     return  sensorValue

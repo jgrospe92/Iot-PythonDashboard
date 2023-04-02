@@ -15,32 +15,37 @@ from . import GraduatedBar
 def render_card(app: Dash) -> html.Div:
     email_sent = "https://cdn-icons-png.flaticon.com/512/2593/2593557.png"
     email_default = "https://cdn-icons-png.flaticon.com/512/896/896673.png"
+    light_off_icon = "https://cdn-icons-png.flaticon.com/512/3626/3626525.png"
+    light_on_icon = "https://cdn-icons-png.flaticon.com/512/3625/3625060.png"
 
     # Add the callbacks
     # email icon callbacks
     @app.callback(
         Output(component_id='email_statusID', component_property="src"),
-        Input('fake', 'on'),
+        Input('LDR_bar_id', 'value'),
     )
-    def update_email_icon(n_clicks):
-        if n_clicks is None:
+    def update_email_icon(value):
+        if value is None:
             raise PreventUpdate
         else:
-            return email_sent
+            cs.send_email_light_sensor("peacewalkerify@gmail.com")
+            if cs.EMAIL_SENSOR_STATUS:
+                return email_sent
+            else:
+                return email_default
 
-    # Callbacks for the button switch
+    # Callbacks for the light switch
     @app.callback(
         # Output(component_id='btn-activate', component_property='children'),
         # Input(component_id='btn-activate', component_property='n_clicks'),
         Output(component_id='lightbulb', component_property="src"),
-        Input('our-power-button-1', 'on'),
+        Input('LDR_bar_id', 'value'),
     )
-    def update_button(n_clicks):
+    def update_light_icon(n_clicks):
         if n_clicks is None:
             raise PreventUpdate
         else:
-            # Tenary operator return OFF if condiion is == 0 else ON
-            return "https://cdn-icons-png.flaticon.com/512/3626/3626525.png" if cs.light_controller() == 0 else "https://cdn-icons-png.flaticon.com/512/3625/3625060.png"
+            return light_on_icon if cs.light_switch_sensor() else light_off_icon
 
     profile = html.Div(className="container h-100",
                        children=[dbc.Card([dbc.CardHeader("User Profile"),
@@ -86,7 +91,7 @@ def render_card(app: Dash) -> html.Div:
                             html.Img(id="email_statusID", className="email_icon",
                                      src=email_default),
                             html.Img(id="lightbulb", className="light order-1",
-                                     src="https://cdn-icons-png.flaticon.com/512/3625/3625060.png")],
+                                     src=light_off_icon)],
                             className="d-flex justify-content-evenly"),
                         html.Div([
                             GraduatedBar.render_GraduatedBar(app)
