@@ -328,4 +328,5 @@ def turn_fan_on(state):
     elif state == "OFF":
         GPIO.output(Motor1, GPIO.LOW)
 
-
+def get_ligth_sensor_value() -> int:
+    return  sensorValue

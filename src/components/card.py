@@ -10,9 +10,12 @@ from . import Colors
 from . import Gauge
 from . import Thermometer
 from . import GraduatedBar
+
+
 def render_card(app: Dash) -> html.Div:
     email_sent = "https://cdn-icons-png.flaticon.com/512/2593/2593557.png"
     email_default = "https://cdn-icons-png.flaticon.com/512/896/896673.png"
+
     # Add the callbacks
     # email icon callbacks
     @app.callback(
@@ -22,7 +25,7 @@ def render_card(app: Dash) -> html.Div:
     def update_email_icon(n_clicks):
         if n_clicks is None:
             raise PreventUpdate
-        else :
+        else:
             return email_sent
 
     # Callbacks for the button switch
@@ -84,11 +87,11 @@ def render_card(app: Dash) -> html.Div:
                                      src=email_default),
                             html.Img(id="lightbulb", className="light order-1",
                                      src="https://cdn-icons-png.flaticon.com/512/3625/3625060.png")],
-                            className="d-flex justify-content-evenly" ),
+                            className="d-flex justify-content-evenly"),
                         html.Div([
                             GraduatedBar.render_GraduatedBar(app)
                             ,
-                        ],className="d-flex flex-column justify-content-center align-items-center"),
+                        ], className="d-flex flex-column justify-content-center align-items-center"),
                     ],
                 )
             ),
@@ -101,10 +104,12 @@ def render_card(app: Dash) -> html.Div:
                         #     interval=1 * 2000, # every two seconds
                         #     n_intervals=0
                         # ),
-                        html.P(className="text-warning",children="Turn the fan > 24"),
-                        html.Div([ Gauge.render_gauge(app), Thermometer.render_thermo(app),
-                                   html.Img(id="fan_control",className="fan mt-4",src="https://cdn-icons-png.flaticon.com/512/545/545932.png")],
-                                 className="d-flex flex-row justify-content-evenly")
+                        # html.P(className="text-warning",children="Turn the fan > 24"),
+                        html.Div([
+                            Gauge.render_gauge(app), Thermometer.render_thermo(app),
+                            html.Img(id="fan_control", className="fan mt-4",
+                                     src="https://cdn-icons-png.flaticon.com/512/545/545932.png")],
+                            className="d-flex flex-row justify-content-evenly")
                     ],
                 )
             ),
@@ -117,8 +122,7 @@ def render_card(app: Dash) -> html.Div:
             dbc.Row([
                 dbc.Col(profile, width=4),
                 dbc.Col(cards, width=8),
-            ],)
-
+            ], )
 
         ]
     )

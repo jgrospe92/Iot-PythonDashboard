@@ -6,6 +6,7 @@ from dash_bootstrap_templates import ThemeSwitchAIO
 from dash.exceptions import PreventUpdate
 from src.components.layout import create_layout
 import src.Controller.ControllerSystem as cs
+from src.Controller.Paho_Broker import ESPBroker
 
 
 
@@ -25,6 +26,10 @@ def main() -> None:
         When you just want to work on the Dashboard, comment out cs.set_up()
     '''
     #cs.set_up()
+
+    # Setting up the broker
+    broker = ESPBroker()
+    broker.start_sub()
 
     app = Dash(__name__, update_title=None, external_stylesheets=[dbc.themes.QUARTZ])
     app.title = "IOT DashBoard"
