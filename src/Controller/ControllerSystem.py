@@ -9,7 +9,7 @@ from datetime import datetime
 
 # Import Rpi and sleep libraries
 # Uncomment this if your working on your GPIO
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 # Set a global flag
 # Photoresistor Value
@@ -188,11 +188,12 @@ DESC: turns the LED on based on the light sensor value
 def light_switch_sensor() -> bool:
     global LOW_LIGHT
     if sensorValue < 400:
-        #GPIO.output(LED,1)
+        GPIO.output(LED,1)
         LOW_LIGHT = True
         return  True
     else:
         LOW_LIGHT = False
+        GPIO.output(LED,0)
         return False
 
 """

@@ -25,7 +25,7 @@ def main() -> None:
         
         When you just want to work on the Dashboard, comment out cs.set_up()
     '''
-    #cs.set_up()
+    cs.set_up()
 
     # Setting up the broker
     broker = ESPBroker()
