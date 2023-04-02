@@ -1,121 +1,106 @@
-#include <PubSubClient.h>
+#include <Arduino.h>
 #include <ESP8266WiFi.h>
+#include <Ticker.h>
+#include <AsyncMqttClient.h>
 
-const char* ssid = "Your IP";
-const char* password = "Your password";
+int sensorVal = 0;
+const int ANALOG_READ_PIN = A0; 
+float voltage = 0;
 
-const char* mqtt_server = "Your mqtt broker server";
+#define WIFI_SSID "SSID here"
+#define WIFI_PASSWORD "Pass here"
 
-WiFiClient espClient;
-PubSubClient client(espClient);
+// Raspberri Pi Mosquitto MQTT Broker
+#define MQTT_HOST IPAddress(192, 168, X, XXX)
+// For a cloud MQTT broker, type the domain name
+//#define MQTT_HOST "example.com"
+#define MQTT_PORT 1883
 
-const int output = 15;
-const int ldr = A0;
 
-// Timers - Auxiliary variables
-unsigned long now = millis();
-unsigned long lastMeasure = 0;
-boolean startTimer = false;
-unsigned long currentTime = millis();
-unsigned long previousTime = 0; 
+#define MQTT_PUB_LIGHT "esp/LightSensor"
 
-// the setup routine runs once when you press reset:
+
+AsyncMqttClient mqttClient;
+Ticker mqttReconnectTimer;
+
+WiFiEventHandler wifiConnectHandler;
+WiFiEventHandler wifiDisconnectHandler;
+Ticker wifiReconnectTimer;
+
+unsigned long previousMillis = 0;   // Stores last time temperature was published
+const long interval = 10000;        // Interval at which to publish sensor readings
+
+void connectToWifi() {
+  Serial.println("Connecting to Wi-Fi...");
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+}
+
+void onWifiConnect(const WiFiEventStationModeGotIP& event) {
+  Serial.println("Connected to Wi-Fi.");
+  connectToMqtt();
+}
+
+void onWifiDisconnect(const WiFiEventStationModeDisconnected& event) {
+  Serial.println("Disconnected from Wi-Fi.");
+  mqttReconnectTimer.detach(); // ensure we don't reconnect to MQTT while reconnecting to Wi-Fi
+  wifiReconnectTimer.once(2, connectToWifi);
+}
+
+void connectToMqtt() {
+  Serial.println("Connecting to MQTT...");
+  mqttClient.connect();
+}
+
+void onMqttConnect(bool sessionPresent) {
+  Serial.println("Connected to MQTT.");
+  Serial.print("Session present: ");
+  Serial.println(sessionPresent);
+}
+
+void onMqttDisconnect(AsyncMqttClientDisconnectReason reason) {
+  Serial.println("Disconnected from MQTT.");
+
+  if (WiFi.isConnected()) {
+    mqttReconnectTimer.once(2, connectToMqtt);
+  }
+}
+
+void onMqttPublish(uint16_t packetId) {
+  Serial.print("Publish acknowledged.");
+  Serial.print("  packetId: ");
+  Serial.println(packetId);
+}
+
 void setup() {
-  pinMode(output, OUTPUT);
-  digitalWrite(output, HIGH);
-  // Serial port for debugging purposes
   Serial.begin(115200);
-    
-  setup_wifi();
-  client.setServer(mqtt_server, 1883);
-  client.setCallback(callback);
-}
-
-void setup_wifi() {
-  delay(10);
-  // We start by connecting to a WiFi network
   Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("");
-  Serial.print("WiFi connected - ESP IP address: ");
-  Serial.println(WiFi.localIP());
-}
 
-void callback(String topic, byte* message, unsigned int length) {
-  Serial.print("Message arrived on topic: ");
-  Serial.print(topic);
-  Serial.print(". Message: ");
-  String messageTemp;
   
-  for (int i = 0; i < length; i++) {
-    Serial.print((char)message[i]);
-    messageTemp += (char)message[i];
-  }
-  Serial.println();
+  wifiConnectHandler = WiFi.onStationModeGotIP(onWifiConnect);
+  wifiDisconnectHandler = WiFi.onStationModeDisconnected(onWifiDisconnect);
 
-  // Feel free to add more if statements to control more GPIOs with MQTT
-  // If a message is received on the topic esp8266/output, you check if the message is either on or off. 
-  // Turns the output according to the message received
-  if(topic=="esp8266/output"){
-    Serial.print("Changing output to ");
-    if(messageTemp == "on"){
-      digitalWrite(output, LOW);
-      Serial.print("on");
-    }
-    else if(messageTemp == "off"){
-      digitalWrite(output, HIGH);
-      Serial.print("off");
-    }
-  }
-  Serial.println();
+  mqttClient.onConnect(onMqttConnect);
+  mqttClient.onDisconnect(onMqttDisconnect);
+
+  mqttClient.onPublish(onMqttPublish);
+  mqttClient.setServer(MQTT_HOST, MQTT_PORT);
+
+  connectToWifi();
 }
 
-void reconnect() {
-  // Loop until we're reconnected
-  while (!client.connected()) {
-    Serial.print("Attempting MQTT connection...");
-    // Create a random client ID
-    String clientId = "ESP8266Client-";
-    clientId += String(random(0xffff), HEX);
-    // Attempt to connect
-    if (client.connect(clientId.c_str())) {
-      Serial.println("connected");  
-      // Subscribe or resubscribe to a topic
-      // You can subscribe to more topics (to control more outputs)
-      client.subscribe("esp8266/output");  
-    } else {
-      Serial.print("failed, rc=");
-      Serial.print(client.state());
-      Serial.println(" try again in 5 seconds");
-      // Wait 5 seconds before retrying
-      delay(5000);
-    }
-  }
-}
-
-// the loop routine runs over and over again forever:
 void loop() {
-  if (!client.connected()) {
-    reconnect();
+  unsigned long currentMillis = millis();
+  // Every X number of seconds (interval = 10 seconds) 
+  // it publishes a new MQTT message
+  if (currentMillis - previousMillis >= interval) {
+    // Save the last time a new reading was published
+    previousMillis = currentMillis;
+
+   sensorVal = analogRead(ANALOG_READ_PIN);
+   float voltage = sensorVal * (3.3 / 1023.0);
+
+    uint16_t packetIdPub1 = mqttClient.publish(MQTT_PUB_LIGHT, 1, true, String(sensorVal).c_str());                            
+    Serial.printf("Publishing on topic %s at QoS 1, packetId: %i ", MQTT_PUB_LIGHT, packetIdPub1);
+    Serial.printf("Message: %.2f \n", voltage);
   }
-  client.loop();
-  
-  // Timer variable with current time
-  now = millis();
-
-  // Publishes new temperature and LDR readings every 30 seconds
-  if (now - lastMeasure > 30000) {
-    lastMeasure = now;
-
-    // Publishes LDR values
-    client.publish("esp8266/ldr", String(analogRead(ldr)).c_str());
-    Serial.println("LDR values published");    
-  }
-
 }
