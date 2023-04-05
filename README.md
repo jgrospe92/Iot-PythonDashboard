@@ -11,6 +11,9 @@ control and monitor the system.
 # IOT dashboard Gadgets
 ## LED Controll
 ![LED_control](https://user-images.githubusercontent.com/77903214/226199328-e43ea068-e232-4dad-af93-d2dc6bbfe0ae.gif)
+## LED switch Sensor
+![Untitled video - Made with Clipchamp](https://user-images.githubusercontent.com/77903214/229329359-cb3042b0-304f-45d4-897f-0f6df7540083.gif)
+
 
 ## Temperature Controll
 ![fan_control](https://user-images.githubusercontent.com/77903214/226211001-8dbc55a2-8f59-43f4-8850-296829f73b0b.gif)
