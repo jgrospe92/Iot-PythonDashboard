@@ -44,8 +44,8 @@ class ESPBroker:
 
         # Once everything has been set up, we can (finally) connect to the broker
         # 1883 is the listener port that the MQTT broker is using
-        #self.client.connect_async(self.mqtt_broker_ip, port=1883, keepalive=60, bind_address="")
-        self.client.connect(self.mqtt_broker_ip, 1883)
+        self.client.connect_async(self.mqtt_broker_ip, port=1883, keepalive=60, bind_address="")
+        #self.client.connect(self.mqtt_broker_ip, 1883)
 
         # Once we have told the client to connect, let the client object run itself
         #self.client.loop_forever()

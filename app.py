@@ -28,7 +28,7 @@ def main() -> None:
     cs.set_up()
 
     # Setting up the broker
-    broker = ESPBroker()
+    broker = ESPBroker("IoTProject/PhotoSensor")
     broker.start_sub()
 
     app = Dash(__name__, update_title=None, external_stylesheets=[dbc.themes.QUARTZ])
