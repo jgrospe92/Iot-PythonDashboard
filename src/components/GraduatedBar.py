@@ -37,7 +37,7 @@ def render_GraduatedBar(app : dash):
                "#F9FF2F":[7,10]}},
     #showCurrentValue=True,
     id="LDR_bar_id",
-    max=10), html.P(id="text_sensor_ID",children="LDR : 1000")]
+    max=10), html.P(id="text_sensor_ID",children="LDR : 1000", className="text-warning fw-bold mt-2")]
 
     return html.Div(children=[
         # dcc.Interval(
