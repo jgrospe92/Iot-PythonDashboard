@@ -25,11 +25,11 @@ def main() -> None:
         
         When you just want to work on the Dashboard, comment out cs.set_up()
     '''
-    cs.set_up()
+    #cs.set_up()
 
     # Setting up the broker
-    broker = ESPBroker("IoTProject/PhotoSensor")
-    broker.start_sub()
+    #broker = ESPBroker("IoTProject/PhotoSensor")
+    #broker.start_sub()
 
     app = Dash(__name__, update_title=None, external_stylesheets=[dbc.themes.QUARTZ])
     app.title = "IOT DashBoard"

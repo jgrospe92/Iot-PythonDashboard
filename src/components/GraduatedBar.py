@@ -37,12 +37,12 @@ def render_GraduatedBar(app : dash):
                "#F9FF2F":[7,10]}},
     #showCurrentValue=True,
     id="LDR_bar_id",
-    max=10), html.P(id="text_sensor_ID",children="LDR : ")]
+    max=10), html.P(id="text_sensor_ID",children="LDR : 1000")]
 
     return html.Div(children=[
-        dcc.Interval(
-            id="interval-light-sensor",
-            interval=1 * 1000, # every two seconds
-            n_intervals=0
-        ),
+        # dcc.Interval(
+        #     id="interval-light-sensor",
+        #     interval=1 * 1000, # every two seconds
+        #     n_intervals=0
+        # ),
         daq.DarkThemeProvider(theme=theme, children=graduatedbar_layout)], className="order-2 mt-2")
