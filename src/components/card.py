@@ -47,35 +47,32 @@ def render_card(app: Dash) -> html.Div:
         else:
             return light_on_icon if cs.light_switch_sensor() else light_off_icon
 
-    profile = html.Div(className="",
-                       children=[dbc.Card([dbc.CardHeader("User Profile"),
+    profile = html.Div(className="profile_styling",
+                       children=[dbc.Card(className="h-100",children=[dbc.CardHeader("User Profile"),
                                            dbc.CardImg(src="https://cdn-icons-png.flaticon.com/512/560/560277.png",
                                                        top=True,
                                                        style={"width": "10rem",
                                                               "border-radius": "50%",
                                                               "align-self": "center",
-                                                              "justify-self": "center"}),
+                                                              "justify-self": "center",
+                                                              "margin-top": "50px"}),
                                            dbc.CardBody([
                                                html.H5("User Profile", className="card-title"),
                                                html.P(
-                                                   "Username",
+                                                   "Name:",
                                                    className="card-text",
                                                ),
+    
                                                html.P(
-                                                   "Favorites"
-                                               ),
-                                               html.P(
-                                                   "Temperature"
+                                                   "Temperature Threshold"
                                                ),
                                                html.P(
-                                                   "Humidity"
+                                                   "Humidity Threshold"
                                                ),
                                                html.P(
-                                                   "Light Intensity"
+                                                   "Light Intensity Threshold"
                                                ),
-                                               dbc.Button(
-                                                   "Log out", color="success", className="mt-auto"
-                                               ),
+                                             
                                            ])])])
 
     card_1 = dbc.Card(
@@ -116,6 +113,8 @@ def render_card(app: Dash) -> html.Div:
             )
     # Blue-tooth controller
     card_3 = dbc.Card(
+                className="blue_tooth_styling",
+                children=
                 dbc.CardBody(
                     [
                         html.H5("Blue-Tooth Connection", className="card-title"),
@@ -134,7 +133,7 @@ def render_card(app: Dash) -> html.Div:
                 )
             )
 
-    cardlayout = html.Div(
+    cardlayout = html.Div(style={'height':'600px'},children=
         [
             dbc.Row([
                 dbc.Col(profile, width=4),

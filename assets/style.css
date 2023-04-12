@@ -51,5 +51,15 @@ Add your custom css here
     }
 }
 
+/* profile */
+.profile_styling {
+    height: 600px;
+}
+/* bluetooth gadged */
+.blue_tooth_styling
+{
+    height: 286px;
+}
+
 /*Blue Tooth*/
 

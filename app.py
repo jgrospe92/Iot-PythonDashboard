@@ -34,7 +34,7 @@ def main() -> None:
     app = Dash(__name__, update_title=None, external_stylesheets=[dbc.themes.QUARTZ])
     app.title = "IOT DashBoard"
     theme_switch = ThemeSwitchAIO(
-        aio_id="theme", themes=[dbc.themes.QUARTZ, dbc.themes.VAPOR]
+        aio_id="theme", themes=[dbc.themes.QUARTZ, dbc.themes.SLATE]
     )
 
     app.layout = dbc.Container([theme_switch,create_layout(app)])
