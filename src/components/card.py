@@ -47,7 +47,7 @@ def render_card(app: Dash) -> html.Div:
         else:
             return light_on_icon if cs.light_switch_sensor() else light_off_icon
 
-    profile = html.Div(className="container h-100",
+    profile = html.Div(className="",
                        children=[dbc.Card([dbc.CardHeader("User Profile"),
                                            dbc.CardImg(src="https://cdn-icons-png.flaticon.com/512/560/560277.png",
                                                        top=True,
@@ -77,30 +77,26 @@ def render_card(app: Dash) -> html.Div:
                                                    "Log out", color="success", className="mt-auto"
                                                ),
                                            ])])])
-    cards = dbc.CardGroup(
-        [
-            dbc.Card(
-                dbc.CardBody(
-                    [
-                        html.H5("LED CONTROL", className="card-title", id="fake"),
-                        html.P(
-                            "Turn the switch on or off.",
-                            className="card-text text-warning",
-                        ),
-                        html.Div([
-                            html.Img(id="email_statusID", className="email_icon",
-                                     src=email_default),
-                            html.Img(id="lightbulb", className="light order-1",
-                                     src=light_off_icon)],
-                            className="d-flex justify-content-evenly"),
-                        html.Div([
-                            GraduatedBar.render_GraduatedBar(app)
-                            ,
-                        ], className="d-flex flex-column justify-content-center align-items-center"),
-                    ],
-                )
-            ),
-            dbc.Card(
+
+    card_1 = dbc.Card(
+            dbc.CardBody(
+                [
+                    html.H5("LED CONTROL", className="card-title", id="fake"),
+                    html.Div([
+                        html.Img(id="email_statusID", className="email_icon",
+                                 src=email_default),
+                        html.Img(id="lightbulb", className="light order-1",
+                                 src=light_off_icon)],
+                        className="d-flex justify-content-evenly"),
+                    html.Div([
+                        GraduatedBar.render_GraduatedBar(app)
+                        ,
+                    ], className="d-flex flex-column justify-content-center align-items-center"),
+                ],
+            )
+        )
+
+    card_2 = dbc.Card(
                 dbc.CardBody(
                     [
                         html.H5("TEMP Control", className="card-title"),
@@ -117,18 +113,43 @@ def render_card(app: Dash) -> html.Div:
                             className="d-flex flex-row justify-content-evenly")
                     ],
                 )
-            ),
-        ],
+            )
+    # Blue-tooth controller
+    card_3 = dbc.Card(
+                dbc.CardBody(
+                    [
+                        html.H5("Blue-Tooth Connection", className="card-title"),
+                        # dcc.Interval(
+                        #     id="interval-component",
+                        #     interval=1 * 2000, # every two seconds
+                        #     n_intervals=0
+                        # ),
+                        # html.P(className="text-warning",children="Turn the fan > 24"),
+                        html.Div([
+                            html.Img(id="fan_control2", className="fan mt-4",
+                                     src="https://cdn-icons-png.flaticon.com/512/660/660354.png")
+                        ],
+                            className="d-flex flex-row justify-content-evenly")
+                    ],
+                )
+            )
 
-    )
-
-    cardlayout = dbc.Row(
+    cardlayout = html.Div(
         [
             dbc.Row([
                 dbc.Col(profile, width=4),
-                dbc.Col(cards, width=8),
-            ], )
-
+                dbc.Col(html.Div([
+                    dbc.Row(
+                        [
+                            dbc.Col(card_1),
+                            dbc.Col(card_2),
+                        ]
+                    ),
+                    dbc.Row(className="mt-2",
+                            children=dbc.Col(card_3)
+                    )
+                ]))
+            ]),
         ]
     )
     return cardlayout
