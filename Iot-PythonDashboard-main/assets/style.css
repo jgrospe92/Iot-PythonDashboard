@@ -1,0 +1,55 @@
+<!--
+Add your custom css here
+
+-->
+/*Add variables here*/
+:root {
+    --WHITE: "#FFFFFF";
+    --BLACK: "#000";
+    --YELLOW: "#FFDB12";
+}
+
+
+.yellow_color {
+    background-color: darkorange;
+}
+
+.app-header {
+    height: 60px;
+    line-height: 60px;
+    border-bottom: thin lightgrey solid;
+}
+
+.app-header .app-header--title {
+    font-size: 22px;
+    padding-left: 5px;
+}
+
+.light-container {
+    height: 100px;
+    width: 100px;
+    /*background-color: var(--BLACK);*/
+    /*border-radius: 50%;*/
+}
+
+.light, .fan, .email_icon{
+    height: 100px;
+    object-fit: fill;
+}
+
+.fan_controll {
+    animation: rotation 1s infinite linear;
+    drop-shadow(8px 8px 10px gray);
+}
+
+@keyframes rotation {
+    from{
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
+
+/*Blue Tooth*/
+
