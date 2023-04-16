@@ -5,3 +5,4 @@ redmail
 redbox
 dash-bootstrap-templates
 paho-mqtt
+aiosqlite
