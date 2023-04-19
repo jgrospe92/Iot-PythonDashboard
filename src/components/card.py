@@ -49,7 +49,7 @@ def render_card(app: Dash) -> html.Div:
 
     profile = html.Div(className="profile_styling",
                        children=[dbc.Card(className="h-100",children=[dbc.CardHeader("User Profile"),
-                                           dbc.CardImg(src="https://cdn-icons-png.flaticon.com/512/560/560277.png",
+                                           dbc.CardImg(src="https://randomuser.me/api/portraits/men/90.jpg",
                                                        top=True,
                                                        style={"width": "10rem",
                                                               "border-radius": "50%",
