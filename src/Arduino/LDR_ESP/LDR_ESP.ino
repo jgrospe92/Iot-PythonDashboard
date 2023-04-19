@@ -139,6 +139,7 @@ rfid.PCD_StopCrypto1();
 
 
   //client.publish("IoTlab/ESP",sum);
+  //client.publish("IoTlab/RFID",card_id);
 
  delay(5000);
  }
