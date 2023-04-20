@@ -7,7 +7,9 @@ from dash.exceptions import PreventUpdate
 from src.components.layout import create_layout
 import src.Controller.ControllerSystem as cs
 from src.Controller.Paho_Broker import ESPBroker
-
+# sqlite import
+import asyncio
+import src.Helper.SqLiteDbHelper as dbHelper
 
 
 # These are the themes
@@ -25,17 +27,23 @@ def main() -> None:
         
         When you just want to work on the Dashboard, comment out cs.set_up()
     '''
+
     #cs.set_up()
+
+    # start db process
+
+    dbHelper.create_connection()
+    dbHelper.sync_read()
 
     # Setting up the broker
     #broker = ESPBroker("IoTProject/PhotoSensor")
     #broker.start_sub()
 
+
+
     app = Dash(__name__, suppress_callback_exceptions=True,
                update_title=None,
                external_stylesheets=[dbc.themes.QUARTZ])
-
-
     app.title = "IOT DashBoard"
 
     theme_switch = ThemeSwitchAIO(
@@ -57,7 +65,7 @@ def main() -> None:
                    ]),
          ])
 
-    # -- start test
+    # -- start pages
     index_page = html.Div([
         html.Div(children=html.Img(src="https://cdn-icons-png.flaticon.com/512/5628/5628131.png"),className="flex-shrink-0")
        ,
@@ -68,7 +76,7 @@ def main() -> None:
                 html.H1("Dashboard"),
                 dcc.Link('Go to Page 1', href='/page-1'),
                 html.Br(),
-                dcc.Link('Go to Page 2', href='/page-2'),
+                dcc.Link('Go to Page 2', href='/dashboard'),
             ], className="flex-gro-1 ms-3")
 
     ],className="d-flex align-items-center")
@@ -111,7 +119,7 @@ def main() -> None:
     def display_page(pathname):
         if pathname == '/page-1':
             return page_1_layout
-        elif pathname == '/page-2':
+        elif pathname == '/dashboard':
             return dashboard_layout
         else:
             return index_page

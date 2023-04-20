@@ -22,7 +22,7 @@ def render_modal(app: Dash):
                         dbc.ModalTitle("Log out"), close_button=False
                     ),
                     dbc.ModalBody(
-                        "Are you sure you want to logout? press ESC to cancel"
+                        "Are you sure you want to logout?"
                     ),
                     dbc.ModalFooter([dbc.Button("Yes", id="close-dismiss", href="/"), dbc.Button("No", id="close-dismiss")]),
 

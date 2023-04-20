@@ -7,12 +7,14 @@ import asyncio
 PATH = '..\..\Database\IoTDatabase'
 TABLE_NAME = 'profile'
 current_user_data = []
+connection = None
 
-def create_connection(a):
-    # global connection
+# Sync
+def sync_create_connection():
+    global connection
     connection = None
     try:
-        connection = aiosqlite.connect(PATH)
+        connection = sqlite3.connect(PATH)
         print("Database connection is successful")
 
     except Error as e:
@@ -20,6 +22,19 @@ def create_connection(a):
 
     return connection
 
+
+def sync_read():
+    global connection
+    cur = connection.cursor()
+    cur.execute("SELECT * FROM profile")
+    rows = cur.fetchall()
+    for row in rows:
+        print(row)
+
+def sync_getProfileById(id):
+    pass
+
+# async
 async def read() -> list:
     global current_user_data
     logging.basicConfig(level=logging.INFO)
@@ -28,5 +43,7 @@ async def read() -> list:
 
 
 if __name__ == "__main__":
-    asyncio.run(read())
+    #asyncio.run(read())
+    create_connection()
+    sync_read()
 
