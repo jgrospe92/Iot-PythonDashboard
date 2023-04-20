@@ -9,7 +9,8 @@ import src.Controller.ControllerSystem as cs
 from src.Controller.Paho_Broker import ESPBroker
 # sqlite import
 import asyncio
-import src.Helper.SqLiteDbHelper as dbHelper
+import sqlite3
+from src.Helper import SqLiteDbHelper as dbHelper
 
 
 # These are the themes
@@ -27,18 +28,22 @@ def main() -> None:
         
         When you just want to work on the Dashboard, comment out cs.set_up()
     '''
-
+    # setting up the GPIO
     #cs.set_up()
 
     # start db process
-
-    dbHelper.create_connection()
-    dbHelper.sync_read()
+    PATH = 'Database/IoTDatabase.db'
+    con = dbHelper.sync_create_connection(PATH)
+    #dbHelper.sync_getAll(con)
+    res = dbHelper.sync_getProfileById(con, "98221647");
+    if res:
+        print(dbHelper.current_user_data)
+    else:
+        print("no match data")
 
     # Setting up the broker
     #broker = ESPBroker("IoTProject/PhotoSensor")
     #broker.start_sub()
-
 
 
     app = Dash(__name__, suppress_callback_exceptions=True,
@@ -126,7 +131,7 @@ def main() -> None:
         # You could also return a 404 "URL not found" page here
     # -- end test
 
-
+    #app.run()
     app.run_server(debug=True)
 
 

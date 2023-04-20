@@ -6,7 +6,7 @@ from . import email_config
 import time
 from time import sleep
 from datetime import datetime
-
+from src.Helper import SqLiteDbHelper as dbHelper
 # Import Rpi and sleep libraries
 # Uncomment this if your working on your GPIO
 # import RPi.GPIO as GPIO
@@ -188,7 +188,7 @@ DESC: turns the LED on based on the light sensor value
 def light_switch_sensor() -> bool:
     global LOW_LIGHT
     print(str(sensorValue))
-    if sensorValue < 400:
+    if sensorValue < dbHelper.current_user_data[4]:
         GPIO.output(LED,1)
         LOW_LIGHT = True
         return  True

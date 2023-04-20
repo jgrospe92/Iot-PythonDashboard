@@ -2,7 +2,7 @@ import dash
 import dash_daq as daq
 from dash import Dash, html, Input, Output, dcc
 import src.Controller.ControllerSystem as cs
-
+from src.Helper import SqLiteDbHelper as dbHelper
 def render_gauge(app : Dash) ->html.Div:
 
     @app.callback(
@@ -14,7 +14,7 @@ def render_gauge(app : Dash) ->html.Div:
     )
     def email_func(n):
         #temperature, humidity = cs.dht11_read()
-        if temperature > 20:
+        if temperature > dbHelper.current_user_data[2]:
             #cs.send_email(temperature, 'peacewalkerify@gmail.com')
             print("temp above 20")
 

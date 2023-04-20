@@ -10,6 +10,7 @@ from . import Colors
 from . import Gauge
 from . import Thermometer
 from . import GraduatedBar, Modal
+from src.Helper import SqLiteDbHelper as dbHelper
 
 
 def render_card(app: Dash) -> html.Div:
@@ -17,6 +18,20 @@ def render_card(app: Dash) -> html.Div:
     email_default = "https://cdn-icons-png.flaticon.com/512/896/896673.png"
     light_off_icon = "https://cdn-icons-png.flaticon.com/512/3626/3626525.png"
     light_on_icon = "https://cdn-icons-png.flaticon.com/512/3625/3625060.png"
+
+    # setup the profile
+    if dbHelper.current_user_data is not None:
+        _name = dbHelper.current_user_data[1]
+        _temp = str(dbHelper.current_user_data[2])
+        _humidity = str(dbHelper.current_user_data[3])
+        _light = str(dbHelper.current_user_data[4])
+        _picture = dbHelper.current_user_data[5]
+    else :
+        _name = ""
+        _temp = ""
+        _humidity = ""
+        _ligh = ""
+        _picture = "https://cdn-icons-png.flaticon.com/512/149/149071.png"
 
     # Add the callbacks
     # email icon callbacks
@@ -49,7 +64,7 @@ def render_card(app: Dash) -> html.Div:
 
     profile = html.Div(className="profile_styling",
                        children=[dbc.Card(className="h-100",children=[dbc.CardHeader("User Profile"),
-                                           dbc.CardImg(src="https://randomuser.me/api/portraits/men/90.jpg",
+                                           dbc.CardImg(src=_picture,
                                                        top=True,
                                                        style={"width": "10rem",
                                                               "border-radius": "50%",
@@ -59,18 +74,18 @@ def render_card(app: Dash) -> html.Div:
                                            dbc.CardBody([
                                                html.H5("User Profile", className="card-title"),
                                                html.P(
-                                                   "Name:",
+                                                   "Name: " + _name,
                                                    className="card-text",
                                                ),
     
                                                html.P(
-                                                   "Temperature Threshold"
+                                                   "Temperature Threshold : " + _temp
                                                ),
                                                html.P(
-                                                   "Humidity Threshold"
+                                                   "Humidity Threshold : " + _humidity
                                                ),
                                                html.P(
-                                                   "Light Intensity Threshold"
+                                                   "Light Intensity Threshold " + _light
                                                ),
                                                Modal.render_modal(app),
                                                #dbc.Button(id="btn_logout", children="Logout", className="mt-2 btn btn-warning btn-sm",href='/')
