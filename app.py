@@ -43,19 +43,38 @@ def main() -> None:
     )
 
     # app.layout = dbc.Container([theme_switch,create_layout(app)])
-    app.layout = html.Div([
-        dcc.Location(id='url', refresh=False),
-        html.Div(id='page-content')
-    ])
+    # app.layout = html.Div([
+    #     dcc.Location(id='url', refresh=False),
+    #     html.Div(id='page-content')
+    # ])
+    app.layout = dbc.Container(
+        [theme_switch,
+         html.Div([html.H1(app.title),
+                   html.Hr(),
+                   html.Div([dcc.Location(id='url', refresh=False),
+                             html.Div(id="page-content", className="container vh-100")
+                             ])
+                   ]),
+         ])
 
     # -- start test
-    index_page = dbc.Container([
-        dcc.Link('Go to Page 1', href='/page-1'),
-        html.Br(),
-        dcc.Link('Go to Page 2', href='/page-2'),
-    ],className="d-flex")
+    index_page = html.Div([
+        html.Div(children=html.Img(src="https://cdn-icons-png.flaticon.com/512/5628/5628131.png"),className="flex-shrink-0")
+       ,
+        html.Div(
+            [
+                html.H1("Scan your card"),
+                html.H1("to login to your"),
+                html.H1("Dashboard"),
+                dcc.Link('Go to Page 1', href='/page-1'),
+                html.Br(),
+                dcc.Link('Go to Page 2', href='/page-2'),
+            ], className="flex-gro-1 ms-3")
 
-    dashboard_layout = dbc.Container([theme_switch,create_layout(app)])
+    ],className="d-flex align-items-center")
+
+    # pages
+    dashboard_layout = dbc.Container([create_layout(app)])
 
     page_1_layout = html.Div([
         html.H1('Page 1'),
