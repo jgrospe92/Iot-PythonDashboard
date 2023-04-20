@@ -20,7 +20,6 @@ def create_connection(a):
 
     return connection
 
-
 async def read() -> list:
     global current_user_data
     logging.basicConfig(level=logging.INFO)

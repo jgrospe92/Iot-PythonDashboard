@@ -9,7 +9,7 @@ import dash_daq as daq
 from . import Colors
 from . import Gauge
 from . import Thermometer
-from . import GraduatedBar
+from . import GraduatedBar, Modal
 
 
 def render_card(app: Dash) -> html.Div:
@@ -72,7 +72,8 @@ def render_card(app: Dash) -> html.Div:
                                                html.P(
                                                    "Light Intensity Threshold"
                                                ),
-                                             
+                                               Modal.render_modal(app),
+                                               #dbc.Button(id="btn_logout", children="Logout", className="mt-2 btn btn-warning btn-sm",href='/')
                                            ])])])
 
     card_1 = dbc.Card(
