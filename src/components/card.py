@@ -20,17 +20,18 @@ def render_card(app: Dash) -> html.Div:
     light_on_icon = "https://cdn-icons-png.flaticon.com/512/3625/3625060.png"
 
     # setup the profile
-    if dbHelper.current_user_data is not None:
+    if dbHelper.current_user_data:
         _name = dbHelper.current_user_data[1]
         _temp = str(dbHelper.current_user_data[2])
         _humidity = str(dbHelper.current_user_data[3])
         _light = str(dbHelper.current_user_data[4])
         _picture = dbHelper.current_user_data[5]
-    else :
+    else:
+        print('not okay')
         _name = ""
         _temp = ""
         _humidity = ""
-        _ligh = ""
+        _light = ""
         _picture = "https://cdn-icons-png.flaticon.com/512/149/149071.png"
 
     # Add the callbacks

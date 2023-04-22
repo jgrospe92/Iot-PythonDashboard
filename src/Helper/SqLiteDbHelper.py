@@ -12,7 +12,7 @@ def sync_create_connection(PATH) -> sqlite3.Connection :
     global  connection
     #PATH = '..\..\Database\IoTDatabase'
     try:
-        connection = sqlite3.connect(PATH)
+        connection = sqlite3.connect(PATH, check_same_thread=False)
         print("Database connection is successful")
     except Error as e:
         print(f"The error '{e} occured'")
@@ -27,21 +27,26 @@ def sync_getAll(connection : sqlite3.Connection):
     for row in rows:
         print(row)
 
-def sync_getProfileById(connection : sqlite3.Connection, id : str) -> bool:
+"""
+@PARAMS (sqlite.Cconnection, id : str)
+@RETURN list
+DESC: return user from the database base on the ID given
+"""
+def sync_getProfileById(connection : sqlite3.Connection, id : str) -> list:
     global  current_user_data
     cur = connection.cursor()
     cur.execute("SELECT * FROM profile WHERE id=?",(id,))
-
     current_user_data = cur.fetchone()
-    return True if current_user_data is not None else False
+    return  current_user_data if current_user_data is not None else []
 
 
 # async
-async def read() -> list:
+async def asyncRead(PATH, id) -> list:
     global current_user_data
     logging.basicConfig(level=logging.INFO)
-    async with aiosqlite.connect(PATH) as db, db.execute("SELECt * FROM profile") as cursor:
-        current_user_data = await cursor.fetchall()
+    async with aiosqlite.connect(PATH) as db, db.execute("SELECt * FROM profile WHERE id=?",(id,)) as cursor:
+        current_user_data = await cursor.fetchone()
+
 
 
 if __name__ == "__main__":
