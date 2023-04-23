@@ -1,5 +1,7 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
+#include "arduino_secrets.h"
+
 
 // RFID
 #include <SPI.h>
@@ -10,15 +12,15 @@ MFRC522 rfid(SS_PIN, RST_PIN); // Instance of the class
 MFRC522::MIFARE_Key key;
 // Init array that will store new NUID
 byte nuidPICC[4];
-// card id
 String card_id = "";
 
+
 //const char* ssid = "TP-Link_2AD8";
-const char* ssid = "peacewalker\342\200\231s iPhone";
+const char* ssid = SECRET_SSID;
 //const char* password = "14730078";
-const char* password = "iotlab123";
+const char* password = SECRET_PASS;
 //const char* mqtt_server = "192.168.0.148";
-const char* mqtt_server = "172.20.10.3";
+const char* mqtt_server = SECRET_IP;
 WiFiClient vanieriot;
 PubSubClient client(vanieriot);
 void setup_wifi() {
@@ -86,16 +88,32 @@ void setup() {
  Serial.print(F("Using the following key:"));
 }
 void loop() {
+  delay(3000);
+  if (!client.connected()) {
+ reconnect();
+ }
+ if(!client.loop()){
+  client.connect("vanieriot");
+ }
+ 
  //int sensorValue = analogRead(A0);
  // char sum[5];
  //itoa(sensorValue, sum, 10);
+ //client.publish("IoTlab/ESP",sum); 
+  client.publish("IoTlab/ESP","hi");
+ 
  // start of rfid
  // Reset the loop if no new card present on the sensor/reader. This saves the entire process when idle.
-if ( ! rfid.PICC_IsNewCardPresent())
- return;
+ // card id
+if ( ! rfid.PICC_IsNewCardPresent()){
+ return; 
+}
+ 
 // Verify if the NUID has been readed
-if ( ! rfid.PICC_ReadCardSerial())
- return;
+if ( ! rfid.PICC_ReadCardSerial()){
+ return; 
+}
+ 
 Serial.print(F("PICC type: "));
 MFRC522::PICC_Type piccType = rfid.PICC_GetType(rfid.uid.sak);
 Serial.println(rfid.PICC_GetTypeName(piccType));
@@ -123,25 +141,31 @@ if (rfid.uid.uidByte[0] != nuidPICC[0] ||
  Serial.println();
  Serial.print("UID : " + card_id);
 }
-else Serial.println(F("Card read previously."));
+else {
+  card_id = "false";
+  // reset nuid array
+
+   for (byte i = 0; i < 4; i++) {
+ nuidPICC[i] = 0;
+ }
+  Serial.println(F("Card read previously."));
+}
+
+
+ int str_len = card_id.length() + 1;
+ char char_arr[str_len];
+ card_id.toCharArray(char_arr,str_len);
+ client.publish("IoTlab/RFID",char_arr);
+
+
 // Halt PICC
 rfid.PICC_HaltA();
 // Stop encryption on PCD
 rfid.PCD_StopCrypto1();
 
  // -- end of rfid
+
  
- if (!client.connected()) {
- reconnect();
- }
- if(!client.loop())
-  client.connect("vanieriot");
-
-
-  //client.publish("IoTlab/ESP",sum);
-  //client.publish("IoTlab/RFID",card_id);
-
- delay(5000);
  }
 
  /** 
@@ -154,4 +178,16 @@ for (byte i = 0; i < bufferSize; i++) {
  
 }
 
+}
+
+void array_to_string(byte array[], unsigned int len, char buffer[])
+{
+  for (unsigned int i = 0; i < len ; i++)
+  {
+    byte nib1 = (array[i] >> 4) & 0x0F;
+    byte nib2 = (array[i] >> 0) & 0x0F;
+    buffer[i * 2 + 0] = nib1 < 0xA ? '0' + nib1 : 'A' + nib1 - 0xA;
+    buffer[i * 2 + 1] = nib2 < 0xA ? '0' + nib2 : 'A' + nib2 - 0xA; 
+  }
+  buffer[len * 2] = '\0';
 }
