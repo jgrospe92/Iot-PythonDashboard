@@ -27,6 +27,8 @@ LOW_LIGHT = False
 EMAIL_STATUS = False
 # email status for the light sensor
 EMAIL_SENSOR_STATUS = False
+# email status for user login
+EMAIL_LOGIN_STATUS = False
 # FAN_ON is a boolean flag that indicates if the fan is on
 FAN_ON = False
 # global DHT
@@ -254,7 +256,7 @@ def send_email_light_sensor(email_to: str):
             password=email_config.password)
         # send the email with the temperature value
         email.send(
-            subject="Alert",  # Email Subject
+            subject="Light-Notif",  # Email Subject
             sender="jgrospetest@gmail.com",
             receivers=[email_to],
             text="The light is on at {{ time }},\n",
@@ -265,6 +267,38 @@ def send_email_light_sensor(email_to: str):
         )
         print("Message Sent!")
         EMAIL_SENSOR_STATUS = True
+
+"""
+@PARAMS {str : receiver}
+@RETURN 
+DESC: Send an email notification when the user login to the system
+"""
+def send_email_user_login(email_to: str, name : str):
+    global EMAIL_LOGIN_STATUS
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    # If the EMAIL_STATUS is False, then we can send the email
+    if not EMAIL_LOGIN_STATUS :
+        # create an instance of email
+        email = EmailSender(
+            host="smtp.gmail.com",
+            port=587,
+            username=email_config.username,
+            password=email_config.password)
+        # send the email with the temperature value
+        email.send(
+            subject="LOGGER-info",  # Email Subject
+            sender="jgrospetest@gmail.com",
+            receivers=[email_to],
+            text="The user {{ name }} logged in at {{ time }},\n",
+            body_params=
+            {
+                "time": current_time,
+                "name": name
+            }
+        )
+        print("Message Sent!")
+        EMAIL_LOGIN_STATUS = True
 
 """
 @PARAMS

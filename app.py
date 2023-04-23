@@ -91,11 +91,14 @@ def main() -> None:
     )
     def update_login(n):
         id = cs.rfid_userID if cs.rfid_userID else "0"
-        print(dbHelper.current_user_data)
         asyncio.run(dbHelper.asyncRead(PATH, id[0]))
         if dbHelper.current_user_data:
+            if not cs.EMAIL_LOGIN_STATUS:
+                print(dbHelper.current_user_data[1] + "log in")
+                cs.send_email_user_login("peacewalkerify@gmail.com", dbHelper.current_user_data[1])
             return '/dashboard'
         else:
+            cs.EMAIL_LOGIN_STATUS = False
             return '/'
 
 

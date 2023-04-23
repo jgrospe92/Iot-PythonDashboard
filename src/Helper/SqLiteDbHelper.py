@@ -6,6 +6,7 @@ import asyncio
 
 connection = None
 current_user_data = None
+USER_LOGGED = False
 
 # Sync
 def sync_create_connection(PATH) -> sqlite3.Connection :
