@@ -1,7 +1,5 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
-#include "arduino_secrets.h"
-
 
 // RFID
 #include <SPI.h>
@@ -12,14 +10,15 @@ MFRC522 rfid(SS_PIN, RST_PIN); // Instance of the class
 MFRC522::MIFARE_Key key;
 // Init array that will store new NUID
 byte nuidPICC[4];
-
+// card id
+String card_id = "";
 
 //const char* ssid = "TP-Link_2AD8";
-const char* ssid = SECRET_SSID;
+const char* ssid = "peacewalker\342\200\231s iPhone";
 //const char* password = "14730078";
-const char* password = SECRET_PASS;
+const char* password = "iotlab123";
 //const char* mqtt_server = "192.168.0.148";
-const char* mqtt_server = "10.0.0.197";
+const char* mqtt_server = "172.20.10.3";
 WiFiClient vanieriot;
 PubSubClient client(vanieriot);
 void setup_wifi() {
@@ -92,8 +91,6 @@ void loop() {
  //itoa(sensorValue, sum, 10);
  // start of rfid
  // Reset the loop if no new card present on the sensor/reader. This saves the entire process when idle.
- // card id
-String card_id = "";
 if ( ! rfid.PICC_IsNewCardPresent())
  return;
 // Verify if the NUID has been readed
@@ -126,10 +123,7 @@ if (rfid.uid.uidByte[0] != nuidPICC[0] ||
  Serial.println();
  Serial.print("UID : " + card_id);
 }
-else {
-  card_id = "";
-  Serial.println(F("Card read previously."));
-}
+else Serial.println(F("Card read previously."));
 // Halt PICC
 rfid.PICC_HaltA();
 // Stop encryption on PCD
@@ -142,10 +136,10 @@ rfid.PCD_StopCrypto1();
  }
  if(!client.loop())
   client.connect("vanieriot");
-  String name = "jeffrey";
+
 
   //client.publish("IoTlab/ESP",sum);
-client.publish("IoTlab/RFID","helo");
+  //client.publish("IoTlab/RFID",card_id);
 
  delay(5000);
  }
