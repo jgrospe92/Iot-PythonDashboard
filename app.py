@@ -39,6 +39,8 @@ def main() -> None:
     # Setting up the broker
     #broker = ESPBroker("IoTProject/PhotoSensor")
     #broker.start_sub()
+    rfid = ESPBroker("IoTLab/RFID")
+    rfid.start_sub()
 
     app = Dash(__name__, suppress_callback_exceptions=True,
                update_title=None,

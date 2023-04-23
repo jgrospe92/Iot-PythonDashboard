@@ -30,9 +30,13 @@ class ESPBroker:
         # If you want to check each message, and do something depending on
         # the content, the code to do this should be run in this function
 
-        #print("Topic: ", msg.topic + "\nMessage: " + str(msg.payload))
-        sensor_value = [int(s) for s in msg.payload.split() if s.isdigit()]
-        cs.sensorValue = sensor_value[0]
+        print("Topic: ", msg.topic + "\nMessage: " + str(msg.payload))
+        if msg.topic == "IoTlab/ESP":
+            pass
+            # sensor_value = [int(s) for s in msg.payload.split() if s.isdigit()]
+            # cs.sensorValue = sensor_value[0]
+        elif msg.topic == "IoTlab/RFID":
+            cs.rfid_userID = msg.payload
 
         # The message itself is stored in the msg variable
         # and details about who sent it are stored in userdata
@@ -51,6 +55,6 @@ class ESPBroker:
         #self.client.loop_forever()
         #self.client.disconnect()
         self.client.loop_start()
-        # msg = subscribe.simple(self.mqtt_topic, hostname=self.mqtt_broker_ip)
-        # value = msg
-        # print("%s %s" % (msg.topic, msg.payload))
+        msg = subscribe.simple(self.mqtt_topic, hostname=self.mqtt_broker_ip)
+        value = msg
+        print("%s %s" % (msg.topic, msg.payload))
