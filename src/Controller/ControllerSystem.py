@@ -17,6 +17,7 @@ sensorValue = 1000;
 
 # RDIS
 rfid_userID = ""
+logged_in = False
 
 isActive = 0  # this tells the program if the light is on or off
 LED = 16 # Enable pin GPIO23

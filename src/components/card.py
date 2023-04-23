@@ -27,7 +27,6 @@ def render_card(app: Dash) -> html.Div:
         _light = str(dbHelper.current_user_data[4])
         _picture = dbHelper.current_user_data[5]
     else:
-        print('not okay')
         _name = ""
         _temp = ""
         _humidity = ""
@@ -88,7 +87,7 @@ def render_card(app: Dash) -> html.Div:
                                                html.P(
                                                    "Light Intensity Threshold " + _light
                                                ),
-                                               Modal.render_modal(app),
+                                               #Modal.render_modal(app),
                                                #dbc.Button(id="btn_logout", children="Logout", className="mt-2 btn btn-warning btn-sm",href='/')
                                            ])])])
 

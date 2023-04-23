@@ -36,7 +36,7 @@ class ESPBroker:
             # sensor_value = [int(s) for s in msg.payload.split() if s.isdigit()]
             # cs.sensorValue = sensor_value[0]
         elif msg.topic == "IoTlab/RFID":
-            cs.rfid_userID = msg.payload
+            cs.rfid_userID = [int(s) for s in msg.payload.split() if s.isdigit()]
 
         # The message itself is stored in the msg variable
         # and details about who sent it are stored in userdata
@@ -55,6 +55,6 @@ class ESPBroker:
         #self.client.loop_forever()
         #self.client.disconnect()
         self.client.loop_start()
-        msg = subscribe.simple(self.mqtt_topic, hostname=self.mqtt_broker_ip)
-        value = msg
-        print("%s %s" % (msg.topic, msg.payload))
+        # msg = subscribe.simple(self.mqtt_topic, hostname=self.mqtt_broker_ip)
+        # value = msg
+        # print("%s %s" % (msg.topic, msg.payload))

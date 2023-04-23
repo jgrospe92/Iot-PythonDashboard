@@ -39,7 +39,10 @@ def main() -> None:
     # Setting up the broker
     #broker = ESPBroker("IoTProject/PhotoSensor")
     #broker.start_sub()
-    rfid = ESPBroker("IoTLab/RFID")
+    test = ESPBroker()
+    test.start_sub()
+
+    rfid = ESPBroker('IoTlab/RFID')
     rfid.start_sub()
 
     app = Dash(__name__, suppress_callback_exceptions=True,
@@ -87,7 +90,9 @@ def main() -> None:
         Input('inteverl_for_url', 'n_intervals')
     )
     def update_login(n):
-        asyncio.run(dbHelper.asyncRead(PATH, "675211623"))
+        id = cs.rfid_userID if cs.rfid_userID else "0"
+        print(dbHelper.current_user_data)
+        asyncio.run(dbHelper.asyncRead(PATH, id[0]))
         if dbHelper.current_user_data:
             return '/dashboard'
         else:

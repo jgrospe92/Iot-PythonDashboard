@@ -5,7 +5,7 @@ import aiosqlite
 import asyncio
 
 connection = None
-current_user_data = []
+current_user_data = None
 
 # Sync
 def sync_create_connection(PATH) -> sqlite3.Connection :
