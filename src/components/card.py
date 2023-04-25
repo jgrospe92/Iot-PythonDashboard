@@ -9,7 +9,7 @@ import dash_daq as daq
 from . import Colors
 from . import Gauge
 from . import Thermometer
-from . import GraduatedBar, Modal
+from . import GraduatedBar, Modal, ToggleSwitch
 from src.Helper import SqLiteDbHelper as dbHelper
 
 
@@ -18,6 +18,8 @@ def render_card(app: Dash) -> html.Div:
     email_default = "https://cdn-icons-png.flaticon.com/512/896/896673.png"
     light_off_icon = "https://cdn-icons-png.flaticon.com/512/3626/3626525.png"
     light_on_icon = "https://cdn-icons-png.flaticon.com/512/3625/3625060.png"
+    ble_on = "https://cdn-icons-png.flaticon.com/512/2778/2778576.png";
+    ble_off = "https://cdn-icons-png.flaticon.com/512/660/660354.png"
 
     # setup the profile
     if dbHelper.current_user_data:
@@ -26,6 +28,9 @@ def render_card(app: Dash) -> html.Div:
         _humidity = str(dbHelper.current_user_data[3])
         _light = str(dbHelper.current_user_data[4])
         _picture = dbHelper.current_user_data[5]
+        # initilize thresholds
+        cs.light_sensor_threshold = dbHelper.current_user_data[4]
+        cs.temperature_threshold = dbHelper.current_user_data[2]
     else:
         _name = ""
         _temp = ""
@@ -134,15 +139,10 @@ def render_card(app: Dash) -> html.Div:
                 dbc.CardBody(
                     [
                         html.H5("Blue-Tooth Connection", className="card-title"),
-                        # dcc.Interval(
-                        #     id="interval-component",
-                        #     interval=1 * 2000, # every two seconds
-                        #     n_intervals=0
-                        # ),
-                        # html.P(className="text-warning",children="Turn the fan > 24"),
                         html.Div([
-                            html.Img(id="fan_control2", className="fan mt-4",
-                                     src="https://cdn-icons-png.flaticon.com/512/660/660354.png")
+                         ToggleSwitch.render_toggleSwitch(app, ble_on,ble_off),
+                            html.Img(id="ble_control", className="ble mt-4",
+                                     src=ble_off)
                         ],
                             className="d-flex flex-row justify-content-evenly")
                     ],

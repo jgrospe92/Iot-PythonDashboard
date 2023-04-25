@@ -36,6 +36,12 @@ Add your custom css here
     height: 100px;
     object-fit: fill;
 }
+.ble {
+    height: 100px;
+    cursor: pointer;
+    object-fit: fill;
+
+}
 
 .fan_controll {
     animation: rotation 1s infinite linear;

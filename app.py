@@ -1,3 +1,4 @@
+import dash
 from dash import Dash, html, dcc, Input, Output, callback
 import time
 # from dash_bootstrap_components.themes import BOOTSTRAP
@@ -39,13 +40,14 @@ def main() -> None:
     # Setting up the broker
     #broker = ESPBroker("IoTProject/PhotoSensor")
     #broker.start_sub()
-    test = ESPBroker()
-    test.start_sub()
+    # test = ESPBroker()
+    # test.start_sub()
 
     rfid = ESPBroker('IoTlab/RFID')
     rfid.start_sub()
 
-    app = Dash(__name__, suppress_callback_exceptions=True,
+    app = Dash(__name__,
+               suppress_callback_exceptions=True,
                update_title=None,
                external_stylesheets=[dbc.themes.QUARTZ])
     app.title = "IOT DashBoard"
@@ -58,7 +60,8 @@ def main() -> None:
         [theme_switch,
          html.Div([html.H1(app.title),
                    html.Hr(),
-                   html.Div([dcc.Interval(
+                   html.Div([
+            dcc.Interval(
             id='inteverl_for_url',
             interval=1*1000, # in milliseconds
             n_intervals=0
@@ -92,13 +95,18 @@ def main() -> None:
     def update_login(n):
         id = cs.rfid_userID if cs.rfid_userID else "0"
         asyncio.run(dbHelper.asyncRead(PATH, id[0]))
-        if dbHelper.current_user_data:
+        if dbHelper.current_user_data and not cs.logged_in:
             if not cs.EMAIL_LOGIN_STATUS:
                 print(dbHelper.current_user_data[1] + "log in")
+                cs.logged_in = True
                 cs.send_email_user_login("peacewalkerify@gmail.com", dbHelper.current_user_data[1])
             return '/dashboard'
+        elif dbHelper.current_user_data and cs.logged_in:
+            # prevents refreshing the dashboards every seconds
+            raise PreventUpdate
         else:
             cs.EMAIL_LOGIN_STATUS = False
+            cs.logged_in = False
             return '/'
 
 

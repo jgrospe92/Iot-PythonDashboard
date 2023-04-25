@@ -19,6 +19,10 @@ sensorValue = 1000;
 rfid_userID = ""
 logged_in = False
 
+# Thresholds
+light_sensor_threshold = 0
+temperature_threshold = 0
+
 isActive = 0  # this tells the program if the light is on or off
 LED = 16 # Enable pin GPIO23
 LED_ON = False # status of the LED
@@ -192,9 +196,9 @@ def light_controller() -> int:
 DESC: turns the LED on based on the light sensor value
 """
 def light_switch_sensor() -> bool:
-    global LOW_LIGHT
+    global LOW_LIGHT, light_sensor_threshold
     print(str(sensorValue))
-    if sensorValue < dbHelper.current_user_data[4]:
+    if sensorValue < light_sensor_threshold:
         GPIO.output(LED,1)
         LOW_LIGHT = True
         return  True
@@ -377,3 +381,10 @@ DESC: returns the value of the light sensor
 """
 def get_ligth_sensor_value() -> int:
     return  sensorValue
+
+
+def initialize_program():
+    # TODO:
+    # temperature_threshold
+    # light_intensity_threshold
+    raise  NotImplementedError
