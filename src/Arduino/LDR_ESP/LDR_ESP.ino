@@ -17,9 +17,7 @@ String card_id = "";
 
 //const char* ssid = "TP-Link_2AD8";
 const char* ssid = SECRET_SSID;
-//const char* password = "14730078";
 const char* password = SECRET_PASS;
-//const char* mqtt_server = "192.168.0.148";
 const char* mqtt_server = SECRET_IP;
 WiFiClient vanieriot;
 PubSubClient client(vanieriot);
@@ -96,11 +94,11 @@ void loop() {
   client.connect("vanieriot");
  }
  
- //int sensorValue = analogRead(A0);
- // char sum[5];
- //itoa(sensorValue, sum, 10);
- //client.publish("IoTlab/ESP",sum); 
-  client.publish("IoTlab/ESP","hi");
+  int sensorValue = analogRead(A0);
+  char sum[5];
+  itoa(sensorValue, sum, 10);
+  client.publish("IoTProject/PhotoSensor",sum); 
+  //client.publish("IoTlab/ESP","hi");
  
  // start of rfid
  // Reset the loop if no new card present on the sensor/reader. This saves the entire process when idle.

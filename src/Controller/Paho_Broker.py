@@ -30,11 +30,10 @@ class ESPBroker:
         # If you want to check each message, and do something depending on
         # the content, the code to do this should be run in this function
 
-        print("Topic: ", msg.topic + "\nMessage: " + str(msg.payload))
-        if msg.topic == "IoTlab/ESP":
-            pass
-            # sensor_value = [int(s) for s in msg.payload.split() if s.isdigit()]
-            # cs.sensorValue = sensor_value[0]
+        #print("Topic: ", msg.topic + "\nMessage: " + str(msg.payload))
+        if msg.topic == "IoTProject/PhotoSensor":
+            sensor_value = [int(s) for s in msg.payload.split() if s.isdigit()]
+            cs.sensorValue = sensor_value[0]
         elif msg.topic == "IoTlab/RFID":
             cs.rfid_userID = [int(s) for s in msg.payload.split() if s.isdigit()]
 

@@ -1,5 +1,6 @@
 import dash
 from dash import Dash, html, dcc, Input, Output, callback
+from dash.dash import no_update
 import time
 # from dash_bootstrap_components.themes import BOOTSTRAP
 import dash_bootstrap_components as dbc
@@ -30,16 +31,15 @@ def main() -> None:
         When you just want to work on the Dashboard, comment out cs.set_up()
     '''
     # setting up the GPIO
-    #cs.set_up()
+    cs.set_up()
 
     # start db process
     PATH = 'Database/IoTDatabase.db'
     con = dbHelper.sync_create_connection(PATH)
-    #dbHelper.sync_getProfileById(con, "98221647")
 
     # Setting up the broker
-    #broker = ESPBroker("IoTProject/PhotoSensor")
-    #broker.start_sub()
+    broker = ESPBroker("IoTProject/PhotoSensor")
+    broker.start_sub()
     # test = ESPBroker()
     # test.start_sub()
 
@@ -82,8 +82,8 @@ def main() -> None:
                 html.H1("to login to your"),
                 html.H1("Dashboard"),
                 # dcc.Link('Go to Page 1', href='/page-1'),
-                # html.Br(),
-                # dcc.Link('Go to Page 2', href='/dashboard'),
+                #html.Br(),
+                #dcc.Link('Documentation', href=''),
             ], className="flex-gro-1 ms-3")
 
     ],className="d-flex align-items-center")
@@ -96,15 +96,17 @@ def main() -> None:
         id = cs.rfid_userID if cs.rfid_userID else "0"
         asyncio.run(dbHelper.asyncRead(PATH, id[0]))
         if dbHelper.current_user_data and not cs.logged_in:
+          
             if not cs.EMAIL_LOGIN_STATUS:
                 print(dbHelper.current_user_data[1] + "log in")
                 cs.logged_in = True
-                cs.send_email_user_login("peacewalkerify@gmail.com", dbHelper.current_user_data[1])
-            return '/dashboard'
+                return '/dashboard'
         elif dbHelper.current_user_data and cs.logged_in:
             # prevents refreshing the dashboards every seconds
+            
             raise PreventUpdate
-        else:
+        elif dbHelper.current_user_data is None:
+            cs.resetValues()
             cs.EMAIL_LOGIN_STATUS = False
             cs.logged_in = False
             return '/'
@@ -113,13 +115,17 @@ def main() -> None:
     # Update the index
     # index callback
     @callback(Output('page-content', 'children'),
-              [Input('url', 'pathname')],prevent_initial_call=True)
+              [Input('url', 'pathname')]
+              ,prevent_initial_call=True
+              )
     def display_page(pathname):
+        print("pathname is " + pathname )
         if pathname is None:
             raise PreventUpdate
         elif pathname == '/':
             return index_page
         elif pathname == '/dashboard':
+            cs.send_email_user_login("peacewalkerify@gmail.com", dbHelper.current_user_data[1])
             return dbc.Container([create_layout(app)])
         # You could also return a 404 "URL not found" page here
     # -- end index callback

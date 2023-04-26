@@ -14,6 +14,7 @@ from src.Helper import SqLiteDbHelper as dbHelper
 
 
 def render_card(app: Dash) -> html.Div:
+    print("############################ LOAD CARD")
     email_sent = "https://cdn-icons-png.flaticon.com/512/2593/2593557.png"
     email_default = "https://cdn-icons-png.flaticon.com/512/896/896673.png"
     light_off_icon = "https://cdn-icons-png.flaticon.com/512/3626/3626525.png"
@@ -118,11 +119,11 @@ def render_card(app: Dash) -> html.Div:
                 dbc.CardBody(
                     [
                         html.H5("TEMP Control", className="card-title"),
-                        # dcc.Interval(
-                        #     id="interval-component",
-                        #     interval=1 * 2000, # every two seconds
-                        #     n_intervals=0
-                        # ),
+                         #dcc.Interval(
+                             #id="interval-component",
+                             #interval=1 * 2000, # every two seconds
+                             #n_intervals=0
+                         #),
                         # html.P(className="text-warning",children="Turn the fan > 24"),
                         html.Div([
                             Gauge.render_gauge(app), Thermometer.render_thermo(app),

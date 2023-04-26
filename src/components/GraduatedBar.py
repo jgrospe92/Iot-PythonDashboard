@@ -3,9 +3,10 @@ import dash_daq as daq
 from dash import Dash, html, Input, Output, dcc
 import src.Controller.ControllerSystem as cs
 from . import Colors
+from dash.exceptions import PreventUpdate
 
 def render_GraduatedBar(app : dash):
-    
+    print("***********************load graduated bar")
     theme = {
         'dark': True,
         'detail': Colors.DARK_BLUE,  # darker
@@ -22,10 +23,13 @@ def render_GraduatedBar(app : dash):
 
     @app.callback(
         Output(component_id='LDR_bar_id', component_property='value'),
-        Input('interval-light-sensor', 'n_intervals')
+        Input('inteverl_for_url', 'n_intervals')
+        #Input('inteverl_for_url', 'n_intervals')
     )
     def update_light_sensor(n):
         global textValue
+        if n is None:
+            raise PreventUpdate
         dataValue = cs.sensorValue
         value = round(dataValue / 100)
         return value
@@ -37,12 +41,13 @@ def render_GraduatedBar(app : dash):
                "#F9FF2F":[7,10]}},
     #showCurrentValue=True,
     id="LDR_bar_id",
-    max=10), html.P(id="text_sensor_ID",children="LDR : 1000", className="text-warning fw-bold mt-2")]
+    max=10),
+    html.P(id="text_sensor_ID",children="LDR : 1000", className="text-warning fw-bold mt-2")]
 
     return html.Div(children=[
-        # dcc.Interval(
-        #     id="interval-light-sensor",
-        #     interval=1 * 1000, # every two seconds
-        #     n_intervals=0
-        # ),
+         dcc.Interval(
+             id="interval-light-sensor",
+             interval=2*1000, # every seconds
+             n_intervals=0
+         ),
         daq.DarkThemeProvider(theme=theme, children=graduatedbar_layout)], className="order-2 mt-2")

@@ -9,7 +9,7 @@ from datetime import datetime
 from src.Helper import SqLiteDbHelper as dbHelper
 # Import Rpi and sleep libraries
 # Uncomment this if your working on your GPIO
-# import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 # Set a global flag
 # Photoresistor Value
@@ -168,9 +168,9 @@ def set_up():
     #dht = DHT(11)
 
     # motor setup
-    # GPIO.setup(Motor1, GPIO.OUT)
-    # GPIO.setup(Motor2, GPIO.OUT)
-    # GPIO.setup(Motor3, GPIO.OUT)
+    #GPIO.setup(Motor1, GPIO.OUT)
+    #GPIO.setup(Motor2, GPIO.OUT)
+    #GPIO.setup(Motor3, GPIO.OUT)
 
 """
 @PARAMS
@@ -181,13 +181,13 @@ def light_controller() -> int:
     global isActive
     if isActive == 1:
         # Turn the light off
-        # GPIO.output(LED, 0)
+        GPIO.output(LED, 0)
         isActive = 0
         return 0
     else:
         # Turn the light on
         isActive = 1
-        # GPIO.output(LED, 1)
+        GPIO.output(LED, 1)
         return 1
 
 """
@@ -303,6 +303,7 @@ def send_email_user_login(email_to: str, name : str):
         )
         print("Message Sent!")
         EMAIL_LOGIN_STATUS = True
+        return True
 
 """
 @PARAMS
@@ -383,8 +384,15 @@ def get_ligth_sensor_value() -> int:
     return  sensorValue
 
 
-def initialize_program():
+def initialize_program(temp, light):
     # TODO:
-    # temperature_threshold
-    # light_intensity_threshold
-    raise  NotImplementedError
+    temperature_threshold = int(temp)
+    light_intensity_threshold = int(light)
+    
+
+def resetValues():
+    global EMAIL_STATUS, EMAIL_SENSOR_STATUS, LOW_LIGHT
+    # TODO reset data values when switching user
+    EMAIL_STATUS = False
+    EMAIL_SENSOR_STATUS = False
+    LOW_LIGHT = False
