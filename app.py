@@ -55,6 +55,10 @@ def main() -> None:
     theme_switch = ThemeSwitchAIO(
         aio_id="theme", themes=[dbc.themes.QUARTZ, dbc.themes.SLATE]
     )
+    
+    # function to load dashlayout
+    def load_dashlayout():
+        return dbc.Container([create_layout(app)])
 
     app.layout = dbc.Container(
         [theme_switch,
@@ -92,7 +96,7 @@ def main() -> None:
 
     @callback(
         Output('url','pathname'),
-        Input('inteverl_for_url', 'n_intervals')
+        Input('inteverl_for_url', 'n_intervals'),
     )
     def update_login(n):
         id = cs.rfid_userID if cs.rfid_userID else "0"
@@ -127,7 +131,8 @@ def main() -> None:
             return index_page
         elif pathname == '/dashboard':
             cs.send_email_user_login("peacewalkerify@gmail.com", dbHelper.current_user_data[1])
-            return dbc.Container([create_layout(app)])
+            #return dbc.Container([create_layout(app)])
+            return load_dashlayout()
         # You could also return a 404 "URL not found" page here
     # -- end index callback
 

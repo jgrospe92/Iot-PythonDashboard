@@ -6,7 +6,7 @@ def render_modal(app: Dash):
     @app.callback(
         Output("modal-dismiss", "is_open"),
         [Input("open-dismiss", "n_clicks"), Input("close-dismiss", "n_clicks")],
-        [State("modal-dismiss", "is_open")],
+        [State("modal-dismiss", "is_open"),],prevent_initial_call=True
     )
     def toggle_modal(n_open, n_close, is_open):
         if n_open or n_close:
@@ -24,7 +24,7 @@ def render_modal(app: Dash):
                     dbc.ModalBody(
                         "Are you sure you want to logout?"
                     ),
-                    dbc.ModalFooter([dbc.Button("Yes", id="close-dismiss", href="/"), dbc.Button("No", id="close-dismiss")]),
+                    dbc.ModalFooter([dbc.Button("Yes", id="close-dismiss"), dbc.Button("No", id="close-dismiss")]),
 
                 ],
                 id="modal-dismiss",

@@ -43,7 +43,7 @@ def render_card(app: Dash) -> html.Div:
     # email icon callbacks
     @app.callback(
         Output(component_id='email_statusID', component_property="src"),
-        Input('LDR_bar_id', 'value'),
+        Input('LDR_bar_id', 'value'),prevent_initial_call=True
     )
     def update_email_icon(value):
         if value is None:
@@ -60,7 +60,7 @@ def render_card(app: Dash) -> html.Div:
         # Output(component_id='btn-activate', component_property='children'),
         # Input(component_id='btn-activate', component_property='n_clicks'),
         Output(component_id='lightbulb', component_property="src"),
-        Input('LDR_bar_id', 'value'),
+        Input('LDR_bar_id', 'value'),prevent_initial_call=True
     )
     def update_light_icon(n_clicks):
         if n_clicks is None:
@@ -94,7 +94,7 @@ def render_card(app: Dash) -> html.Div:
                                                    "Light Intensity Threshold " + _light
                                                ),
                                                #Modal.render_modal(app),
-                                               #dbc.Button(id="btn_logout", children="Logout", className="mt-2 btn btn-warning btn-sm",href='/')
+                                               #dbc.Button(id="btn_logout", children="Reload", className="mt-2 btn btn-warning btn-sm")
                                            ])])])
 
     card_1 = dbc.Card(
