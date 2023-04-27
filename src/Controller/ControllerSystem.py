@@ -165,12 +165,12 @@ def set_up():
     GPIO.setup(LED, GPIO.OUT, initial=GPIO.LOW)
 
     # DHT SetUp
-    #dht = DHT(11)
+    dht = DHT(11)
 
     # motor setup
-    #GPIO.setup(Motor1, GPIO.OUT)
-    #GPIO.setup(Motor2, GPIO.OUT)
-    #GPIO.setup(Motor3, GPIO.OUT)
+    GPIO.setup(Motor1, GPIO.OUT)
+    GPIO.setup(Motor2, GPIO.OUT)
+    GPIO.setup(Motor3, GPIO.OUT)
 
 """
 @PARAMS
