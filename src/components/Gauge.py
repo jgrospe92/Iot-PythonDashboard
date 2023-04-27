@@ -9,7 +9,7 @@ def render_gauge(app : Dash) ->html.Div:
         #Output(component_id='fan_control', component_property='className'),
         Output(component_id='gauge_id', component_property='value'),
         Output(component_id='darktheme-daq-thermometer', component_property='value'),
-        Input('interval-component', 'n_intervals')
+        Input('interval-component', 'n_intervals'),prevent_initial_call=True
 
     )
     def email_func(n):
@@ -22,7 +22,7 @@ def render_gauge(app : Dash) ->html.Div:
 
     @app.callback(
         Output(component_id='fan_control', component_property='className'),
-        Input('interval-component', 'n_intervals'),
+        Input('interval-component', 'n_intervals'),prevent_initial_call=True
     )
     def process_email(n):
         #cs.check_email()

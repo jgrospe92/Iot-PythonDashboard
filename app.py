@@ -66,7 +66,9 @@ def main() -> None:
             interval=1*1000, # in milliseconds
             n_intervals=0
         ),
-                       dcc.Location(id='url', refresh=False),
+                       dcc.Location(id='url',
+                                    refresh=False
+                                    ),
                              html.Div(id="page-content", className="container vh-100")
                              ])
                    ]),
@@ -103,7 +105,6 @@ def main() -> None:
                 return '/dashboard'
         elif dbHelper.current_user_data and cs.logged_in:
             # prevents refreshing the dashboards every seconds
-            
             raise PreventUpdate
         elif dbHelper.current_user_data is None:
             cs.resetValues()
@@ -131,7 +132,7 @@ def main() -> None:
     # -- end index callback
 
     #app.run()
-    app.run_server(debug=True)
+    app.run_server(debug=True,threaded=True)
 
 
 if __name__ == "__main__":

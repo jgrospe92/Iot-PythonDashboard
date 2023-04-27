@@ -12,9 +12,11 @@ def render_toggleSwitch(app: Dash, on, off):
     }
     @app.callback(
         Output(component_id='ble_control', component_property='src'),
-        Input(component_id='toggleSwitchId', component_property='value')
+        Input(component_id='toggleSwitchId', component_property='value'),prevent_initial_call=True
     )
     def update(value):
+        if value is None:
+            raise PreventUpdate
         return on if value else off
 
     layout = daq.ToggleSwitch(

@@ -86,7 +86,7 @@ void setup() {
  Serial.print(F("Using the following key:"));
 }
 void loop() {
-  delay(3000);
+  delay(2000);
   if (!client.connected()) {
  reconnect();
  }
