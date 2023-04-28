@@ -6,7 +6,6 @@ from . import Colors
 from dash.exceptions import PreventUpdate
 
 def render_GraduatedBar(app : dash):
-    print("***********************load graduated bar")
     theme = {
         'dark': True,
         'detail': Colors.DARK_BLUE,  # darker

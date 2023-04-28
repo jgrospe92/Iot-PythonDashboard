@@ -35,16 +35,16 @@ def main() -> None:
 
     # start db process
     PATH = 'Database/IoTDatabase.db'
-    con = dbHelper.sync_create_connection(PATH)
+    #con = dbHelper.sync_create_connection(PATH)
 
     # Setting up the broker
-    broker = ESPBroker("IoTProject/PhotoSensor")
-    broker.start_sub()
+    #broker = ESPBroker("IoTProject/PhotoSensor")
+    #broker.start_sub()
     # test = ESPBroker()
     # test.start_sub()
 
-    rfid = ESPBroker('IoTlab/RFID')
-    rfid.start_sub()
+    #rfid = ESPBroker('IoTlab/RFID')
+    #rfid.start_sub()
 
     app = Dash(__name__,
                suppress_callback_exceptions=True,
@@ -87,13 +87,13 @@ def main() -> None:
                 html.H1("Scan your card"),
                 html.H1("to login to your"),
                 html.H1("Dashboard"),
-                # dcc.Link('Go to Page 1', href='/page-1'),
+                dcc.Link('Go to Page 1', href='/dashboard'),
                 #html.Br(),
                 #dcc.Link('Documentation', href=''),
             ], className="flex-gro-1 ms-3")
 
     ],className="d-flex align-items-center")
-
+    """
     @callback(
         Output('url','pathname'),
         Input('inteverl_for_url', 'n_intervals'),
@@ -116,7 +116,7 @@ def main() -> None:
             cs.logged_in = False
             return '/'
 
-
+    """
     # Update the index
     # index callback
     @callback(Output('page-content', 'children'),
@@ -130,14 +130,14 @@ def main() -> None:
         elif pathname == '/':
             return index_page
         elif pathname == '/dashboard':
-            cs.send_email_user_login("peacewalkerify@gmail.com", dbHelper.current_user_data[1])
+            #cs.send_email_user_login("peacewalkerify@gmail.com", dbHelper.current_user_data[1])
             #return dbc.Container([create_layout(app)])
             return load_dashlayout()
         # You could also return a 404 "URL not found" page here
     # -- end index callback
 
     #app.run()
-    app.run_server(debug=True,threaded=True)
+    app.run_server(debug=False,threaded=True, host='0.0.0.0', port=1234)
 
 
 if __name__ == "__main__":

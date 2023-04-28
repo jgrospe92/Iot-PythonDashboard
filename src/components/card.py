@@ -48,7 +48,7 @@ def render_card(app: Dash) -> html.Div:
         if value is None:
             raise PreventUpdate
         else:
-            cs.send_email_light_sensor("peacewalkerify@gmail.com")
+            #cs.send_email_light_sensor("peacewalkerify@gmail.com")
             if cs.EMAIL_SENSOR_STATUS:
                 return email_sent
             else:
