@@ -6,3 +6,4 @@ redbox
 dash-bootstrap-templates
 paho-mqtt
 aiosqlite
+pybluez
