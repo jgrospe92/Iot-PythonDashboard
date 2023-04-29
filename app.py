@@ -121,7 +121,8 @@ def main() -> None:
     # index callback
     @callback(Output('page-content', 'children'),
               [Input('url', 'pathname')]
-              ,prevent_initial_call=True
+              ,prevent_initial_call=True,
+              prevent_initial_callbacks="initial_duplicate"
               )
     def display_page(pathname):
         print("pathname is " + pathname )

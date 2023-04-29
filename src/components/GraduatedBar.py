@@ -26,7 +26,7 @@ def render_GraduatedBar(app : dash):
         #Input('inteverl_for_url', 'n_intervals')
     )
     def update_light_sensor(n):
-        print("intervals: " + str(cs.sensorValue))
+        #print("intervals: " + str(cs.sensorValue))
         dataValue = cs.sensorValue
         value = round(dataValue / 100)
         return value
@@ -42,9 +42,9 @@ def render_GraduatedBar(app : dash):
     html.P(id="text_sensor_ID",children="LDR : 1000", className="text-warning fw-bold mt-2")]
 
     return html.Div(children=[
-         dcc.Interval(
-             id="interval-light-sensor",
-             interval=1*2000, # every seconds
-             n_intervals=0
-         ),
+        # dcc.Interval(
+         #    id="interval-light-sensor",
+          #   interval=1*2000, # every seconds
+         #    n_intervals=0
+        # ),
         daq.DarkThemeProvider(theme=theme, children=graduatedbar_layout)], className="order-2 mt-2")
