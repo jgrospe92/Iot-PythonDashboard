@@ -132,6 +132,23 @@ def render_card(app: Dash) -> html.Div:
                     ],
                 )
             )
+    # badge
+    badge = dbc.Button(
+        [
+            "BT devices nearby",
+            dbc.Badge("4", color="light", text_color="primary", className="ms-1"),
+        ],
+        color="danger",
+    )
+    # RSSI input
+    number_input = html.Div(
+        [
+            dbc.Input(placeholder="RSSI Threshold",type="number", min=0, max=255, step=1),
+            html.P("(dBm) 0-255 default=50", className="mt-2 text-warning"),
+        ],
+        id="styled-numeric-input",className="mt-2"
+    )
+
     # Blue-tooth controller
     card_3 = dbc.Card(
                 className="blue_tooth_styling",
@@ -141,10 +158,14 @@ def render_card(app: Dash) -> html.Div:
                         html.H5("Blue-Tooth Connection", className="card-title"),
                         html.Div([
                          ToggleSwitch.render_toggleSwitch(app, ble_on,ble_off),
-                            html.Img(id="ble_control", className="ble mt-4",
-                                     src=ble_off)
+                            html.Img(id="ble_control", className="ble",
+                                     src=ble_off),
+                            html.Div([
+                                badge,
+                                number_input
+                            ])
                         ],
-                            className="d-flex flex-row justify-content-evenly")
+                            className="d-flex flex-row justify-content-evenly align-items-center")
                     ],
                 )
             )

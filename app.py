@@ -31,7 +31,7 @@ def main() -> None:
         When you just want to work on the Dashboard, comment out cs.set_up()
     '''
     # setting up the GPIO
-    cs.set_up()
+    # cs.set_up()
 
     # start db process
     PATH = 'Database/IoTDatabase.db'
@@ -137,7 +137,8 @@ def main() -> None:
     # -- end index callback
 
     #app.run()
-    app.run_server(debug=False,threaded=True, host='0.0.0.0', port=1234)
+    #app.run_server(debug=True,threaded=True, host='0.0.0.0', port=1234)
+    app.run_server(debug=True, threaded=True)
 
 
 if __name__ == "__main__":

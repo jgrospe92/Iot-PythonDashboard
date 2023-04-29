@@ -9,7 +9,7 @@ from datetime import datetime
 from src.Helper import SqLiteDbHelper as dbHelper
 # Import Rpi and sleep libraries
 # Uncomment this if your working on your GPIO
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 
 # Set a global flag
 # Photoresistor Value
