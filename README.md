@@ -73,14 +73,14 @@ control and monitor the system.
 - Replace `BROKER IP ADDRESS` with the right MQTT Broker IP address 
 
 # wifi username and password
-- In order to hide your wife confidentials we will need to create a header file
+- In order to hide your wifi confidentials we will need to create a header file
 - In the Arudino IDE click the down arrow button on the top right side of the window
 - Click New Tab then name it to `arduino_secrets.h`
 - then define two variables
 - `#define SECRET_SSID "Your network SSID"`
 - `#define SECRET_PASS "Your network password"`
-- `#deine SECRET_IP "Your network IP"`
-- 
+- `#define SECRET_IP "Your network IP"`
+
 
 # Plottly Dash Documentation
 - https://dash.plotly.com/
