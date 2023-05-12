@@ -14,6 +14,7 @@ import RPi.GPIO as GPIO
 # Set a global flag
 # Photoresistor Value
 sensorValue = 1000;
+BT_counter = 0
 
 # RDIS
 rfid_userID = ""

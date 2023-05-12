@@ -82,5 +82,16 @@ control and monitor the system.
 - `#define SECRET_IP "Your network IP"`
 
 
+# How to run the server in LAN
+- set `app.run_server(host='0.0.0.0', port=1234)`
+- Now we need network ip address, in ther terminal, run `ifconfig`
+- you should see wlan0: ... inet x.y.z
+- On the another computer, open any browser and type in the url
+- the network ip address : port number
+- ex. 10.0.1.2:1234
+# Can't connect
+- if you get an error that says, 'connection refuse'
+- try using another port
+
 # Plottly Dash Documentation
 - https://dash.plotly.com/

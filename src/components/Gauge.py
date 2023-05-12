@@ -13,19 +13,22 @@ def render_gauge(app : Dash) ->html.Div:
 
     )
     def email_func(n):
-        temperature, humidity = cs.dht11_read()
+        #temperature, humidity = cs.dht11_read()
         if temperature > dbHelper.current_user_data[2]:
-            cs.send_email(temperature, 'peacewalkerify@gmail.com')
-            print("temp above 20")
+            pass
+            #cs.send_email(temperature, 'peacewalkerify@gmail.com')
+            
 
-        return  temperature,humidity
+        #return  temperature,humidity
+        return 0,0
+        
 
     @app.callback(
         Output(component_id='fan_control', component_property='className'),
         Input('interval-component', 'n_intervals'),prevent_initial_call=True
     )
     def process_email(n):
-        cs.check_email()
+        #cs.check_email()
         if cs.EMAIL_STATUS and cs.FAN_ON:
             cs.turn_fan_on("ON")
             return 'fan fan_controll mt-4'

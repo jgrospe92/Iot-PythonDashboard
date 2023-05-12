@@ -48,7 +48,7 @@ def render_card(app: Dash) -> html.Div:
         if value is None:
             raise PreventUpdate
         else:
-            cs.send_email_light_sensor("peacewalkerify@gmail.com")
+            #cs.send_email_light_sensor("peacewalkerify@gmail.com")
             if cs.EMAIL_SENSOR_STATUS:
                 return email_sent
             else:
@@ -118,11 +118,11 @@ def render_card(app: Dash) -> html.Div:
                 dbc.CardBody(
                     [
                         html.H5("TEMP Control", className="card-title"),
-                         dcc.Interval(
-                             id="interval-component",
-                             interval=1 * 2000, # every two seconds
-                             n_intervals=0
-                         ),
+                       #  dcc.Interval(
+                        #     id="interval-component",
+                        #     interval=1 * 2000, # every two seconds
+                         #    n_intervals=0
+                        # ),
                         # html.P(className="text-warning",children="Turn the fan > 24"),
                         html.Div([
                             Gauge.render_gauge(app), Thermometer.render_thermo(app),
@@ -132,6 +132,25 @@ def render_card(app: Dash) -> html.Div:
                     ],
                 )
             )
+    # badge
+    badge = dbc.Button(
+        [
+            "BT devices nearby",
+            dbc.Badge("0", color="light", text_color="primary", className="ms-1", id="num_ble_devices"),
+        ],
+        color="danger",
+    )
+    # RSSI input
+    number_input = html.Div(
+        [
+            dbc.Input(placeholder="RSSI Threshold",type="number", min=0, max=255, step=1, id="rssi_input"),
+            html.P("(dBm) 0-255 default=0", className="mt-2 text-warning"),
+        ],
+        id="styled-numeric-input",className="mt-2"
+    )
+    # callback for bluetooth
+    
+
     # Blue-tooth controller
     card_3 = dbc.Card(
                 className="blue_tooth_styling",
@@ -141,10 +160,14 @@ def render_card(app: Dash) -> html.Div:
                         html.H5("Blue-Tooth Connection", className="card-title"),
                         html.Div([
                          ToggleSwitch.render_toggleSwitch(app, ble_on,ble_off),
-                            html.Img(id="ble_control", className="ble mt-4",
-                                     src=ble_off)
+                            html.Img(id="ble_control", className="ble",
+                                     src=ble_off),html.Span(children="",id="blu_status",className="text-success"),
+                            html.Div([
+                                badge,
+                                number_input
+                            ])
                         ],
-                            className="d-flex flex-row justify-content-evenly")
+                            className="d-flex flex-row justify-content-evenly align-items-center")
                     ],
                 )
             )
